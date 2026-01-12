@@ -17,4 +17,5 @@ export interface Task {
     concluded?: boolean,
     state?:TaskState,
     rating?: TaskRating
+    createdAt?: Date
 }
