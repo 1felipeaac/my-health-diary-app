@@ -10,16 +10,16 @@ import React from "react";
 import InputText from "../components/input-text";
 import { TaskRating, TaskState, type Task } from "../models/task";
 import { cx } from "class-variance-authority";
-import useTask from "../hooks/use-task";
 import Skeleton from "../components/skeleton";
 import InputRadioButton from "../components/input-radioButton";
+import taskUseCases from "../useCases/taskUseCases";
 
 interface TaskItemProps {
     task: Task,
     loading?: boolean
 }
 
-export default function TaskItem({task, loading}:TaskItemProps){
+export default function TaskItemDB({task, loading}:TaskItemProps){
 
     const [isEditing, setIsEditing] = React.useState(
         task?.state === TaskState.Creating
@@ -27,7 +27,8 @@ export default function TaskItem({task, loading}:TaskItemProps){
 
     const [taskTitle, setTaskTitle] = React.useState(task.title || "")
 
-    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask, isUpdatingTask, isDeletingTask} = useTask()
+    // const {updateTask, updateTaskStatus, updateTaskRating, deleteTask, isUpdatingTask, isDeletingTask} = useTask()
+    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask ,isUpdatingTask, isDeletingTask} = taskUseCases()
 
     const ratings = Object.values(TaskRating)
 
@@ -50,7 +51,7 @@ export default function TaskItem({task, loading}:TaskItemProps){
 
     async function handleSaveTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
-        await updateTask(task.id, {title: task.title})
+        await updateTask(task.id, taskTitle)
         setIsEditing(false)
     }
 
@@ -87,7 +88,7 @@ export default function TaskItem({task, loading}:TaskItemProps){
                                 "line-through": task?.concluded,
                             })}
                         >
-                            {task.title}
+                            {taskTitle}
                         </Text>
                         {task?.concluded === true &&
                         <div style={{display: 'flex', gap: '.25rem'}}>

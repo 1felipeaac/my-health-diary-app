@@ -1,5 +1,5 @@
 import {db} from '../db/database'
-import { TaskRating, type Task } from '../models/task'
+import { TaskRating, type Task, TaskState } from '../models/task'
 
 export class TaskRepository{
     async create(task: Omit<Task, 'id' | 'createdAt'>){
@@ -10,8 +10,15 @@ export class TaskRepository{
         })
     }
 
+    async findAll() {
+        return db.tasks
+          .orderBy('createdAt')
+          .reverse()
+          .toArray()
+      }
+
     async updateTask(id: string, title: string){
-        return db.tasks.update(id, {title})
+        return db.tasks.update(id, {title, state: TaskState.Created})
     }
     async toggleCompleted(id: string, concluded: boolean){
         return db.tasks.update(id, {concluded})
@@ -24,4 +31,11 @@ export class TaskRepository{
     async delete(id: string) {
         return db.tasks.delete(id)
       }
+
+    async tasksCount(){
+        return db.tasks.filter((task) => task.state === TaskState.Created).count()
+    }
+    async concludedTasksCount(){
+        return db.tasks.filter((task) => task.concluded !== undefined).count()
+    }
 }

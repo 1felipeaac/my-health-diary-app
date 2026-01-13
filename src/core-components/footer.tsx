@@ -15,6 +15,11 @@ export default function Footer(){
                         Componentes
                     </Text>
                 </NavLink>
+                <NavLink to={"/pageTest"}>
+                    <Text variant={"body-sm-bold"} className="text-gray-300">
+                        Teste
+                    </Text>
+                </NavLink>
             </nav>
         </footer>
 

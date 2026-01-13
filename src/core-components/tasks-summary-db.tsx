@@ -1,10 +1,12 @@
 import Badge from "../components/badge";
 import Text from "../components/text";
-import useTasks from "../hooks/use-tasks";
+import taskUseCases from "../useCases/taskUseCases";
 
-export default function TasksSummary(){
-    const { tasksCounts, concludedTasksCount, isLoadingTasks } = useTasks()
-
+export default function TasksSummaryDB(){
+    // const { tasksCounts, concludedTasksCount, isLoadingTasks } = useTasks()
+    const {tasksCounts, concludedTasksCount, isLoadingTasks} = taskUseCases()
+        
+     
     return(
         <>
             <div className="flex items-center gap-2">

@@ -1,6 +1,6 @@
 import Container from "../components/container";
 import TasksList from "../core-components/tasks-list";
-import TasksSummary from "../core-components/tasks-summary";
+import TasksSummary from "../core-components/tasks-summary-db";
 
 export default function PageHome(){
     return <Container as="article" className="space-y-3">
