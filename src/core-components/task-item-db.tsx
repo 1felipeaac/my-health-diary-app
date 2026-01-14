@@ -73,6 +73,15 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
         await deleteTask(task.id)
     }
 
+    function formatData(date: Date){
+        return date.toLocaleDateString('pt-BR', {
+            // weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+    }
+
     return (
         <Card size="md">
             {!isEditing ? (
@@ -91,18 +100,23 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
                             {taskTitle}
                         </Text>
                         {task?.concluded === true &&
-                        <div style={{display: 'flex', gap: '.25rem'}}>
-                            {ratings.map((rating) => (
-                                <InputRadioButton 
-                                    key={rating+task.id}
-                                    id={rating+task.id} 
-                                    name={"rating"+task.id} 
-                                    status={rating}
-                                    value={rating}
-                                    onChange={handleChangeTaskRating}
-                                />
-                            ))}
-                        </div>}
+                            <>
+                                {task.createdAt !== undefined && <div>{formatData(task.createdAt)}</div>}
+                                <div style={{display: 'flex', gap: '.25rem'}}>
+                                {ratings.map((rating) => (
+                                    <InputRadioButton 
+                                        key={rating+task.id}
+                                        id={rating+task.id} 
+                                        name={"rating"+task.id} 
+                                        status={rating}
+                                        value={rating}
+                                        checked={task.rating === rating}
+                                        onChange={handleChangeTaskRating}
+                                    />
+                                ))}
+                                </div>
+                            </>
+                        }
                     </>  : 
                     <Skeleton className="flex-1 h-6"/>}
                     <div className="flex gap-1">

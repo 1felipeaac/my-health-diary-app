@@ -12,6 +12,17 @@ export default function TasksListDB(){
         addTask("")
     }
 
+    const creatingTask = tasks.find(
+        (task) => task.state === TaskState.Creating
+      )
+
+      const createdTasks = tasks
+        .filter((task) => task.state !== TaskState.Creating)
+        .sort((a, b) => {
+            if (!a.createdAt || !b.createdAt) return 0
+            return a.createdAt.getTime() - b.createdAt.getTime()
+        })
+
     return (
     <>
         <section>
@@ -24,8 +35,11 @@ export default function TasksListDB(){
                 Nova Tarefa</Button>
         </section>
         <section className="space-y-2">
-            {tasks.map((task)=> (
-                <TaskItemDB key={task.id} task={task}/>
+            {creatingTask && (
+                <TaskItemDB key={creatingTask.id} task={creatingTask} />
+            )}
+            {createdTasks.map((task) => (
+                <TaskItemDB key={task.id} task={task} />
             ))}
             {isLoadingTasks && <>
                 <TaskItemDB task={{} as Task} loading/>
