@@ -40,14 +40,16 @@ export default function InputFile({
                 {...props}
                 type="file"
             />
-            <Button  icon={Import} >
-                <label
-                    htmlFor={inputId}
-                    style={{cursor: 'pointer'}}
-                >
-                    {label}
-                </label>
-            </Button>
+            <label
+                htmlFor={inputId}
+                style={{cursor: 'pointer'}}
+            >
+                <Button  icon={Import} >
+                    
+                        {label}
+                    
+                </Button>
+            </label>
         </div>
     )
 }
