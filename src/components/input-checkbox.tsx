@@ -3,6 +3,7 @@ import type React from "react"
 import Icon from "./icon"
 import CheckIcon from "../assets/icons/Square-Regular.svg?react"
 import Skeleton from "./skeleton"
+
 export const inputCheckboxWrapperVariants = cva(`
     inline-flex items-center justify-center relative
     group
