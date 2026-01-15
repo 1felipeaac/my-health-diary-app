@@ -33,7 +33,7 @@ export default function TaskCard({task, loading, readonly}:TaskItemProps){
     
     const isReadonly = !!readonly
 
-    const [taskTitle, setTaskTitle] = React.useState(task.title || "")
+    const [taskTitle] = React.useState(task.title || "")
 
     const ratings = Object.values(TaskRating)
 
