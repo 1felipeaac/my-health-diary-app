@@ -3,6 +3,7 @@ import { TaskState, type TaskRating, type Task } from "../models/task";
 import { TaskRepository } from "../repositories/TaskRepository";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/database";
+import { isSameDay, today } from "../helpers/utils";
 
 const repository = new TaskRepository()
 
@@ -48,8 +49,23 @@ export default function taskUseCases(){
         return await repository.findAll()
     }
 
-    const tasksCounts = tasks?.filter(task => task.state === TaskState.Created).length ?? 0
-    const concludedTasksCount = tasks?.filter(task => task.concluded).length ?? 0
+    const todaysTasksCounts = tasks
+        ?.filter(task => task.state === TaskState.Created)
+        ?.filter(task => task.createdAt && isSameDay(task.createdAt, today))
+        .length ?? 0
+
+    const todaysConcludedTasksCount = tasks
+        ?.filter(task => task.concluded)
+        ?.filter(task => task.createdAt && isSameDay(task.createdAt, today))
+        .length ?? 0
+
+    const totalTasksCounts = tasks
+        ?.filter(task => task.state === TaskState.Created)
+        .length ?? 0
+
+    const totalConcludedTasksCount = tasks
+        ?.filter(task => task.concluded)
+        .length ?? 0
 
     return {
         addTask,
@@ -58,8 +74,10 @@ export default function taskUseCases(){
         updateTaskRating,
         deleteTask,
         findAll,
-        tasksCounts,
-        concludedTasksCount,
+        todaysTasksCounts,
+        todaysConcludedTasksCount,
+        totalTasksCounts,
+        totalConcludedTasksCount,
         tasks,
         isUpdatingTask,
         isDeletingTask,

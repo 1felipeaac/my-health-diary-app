@@ -26,14 +26,14 @@ export const inputCheckboxVariants = cva(`
         size: {
             md: "w-5 h-5 rounded-sm"
         },
-        disabled:{
+        isDisabled:{
             true: "pointer-events-none"
         }
     },
     defaultVariants:{
         variant: "default",
         size: "md",
-        disabled: false
+        isDisabled: false
     }
 })
 
@@ -52,7 +52,7 @@ export const inputCheckboxIconVariants = cva(`
 })
 
 interface InputCheckboxProps extends VariantProps<typeof inputCheckboxVariants>,
-    Omit<React.ComponentProps<"input">, "size" | "disabled">{
+    Omit<React.ComponentProps<"input">, "size">{
         loading?: boolean
     }
 
@@ -60,6 +60,7 @@ export default function InputCheckbox({
     variant,
     size,
     disabled,
+    isDisabled,
     className,
     loading,
     ...props
@@ -77,7 +78,7 @@ export default function InputCheckbox({
     }
     return (
         <label className={inputCheckboxWrapperVariants({className})}>
-            <input type="checkbox" className={inputCheckboxVariants({size, disabled})} {...props}/>
+            <input type="checkbox" className={inputCheckboxVariants({size, isDisabled})} disabled={disabled} {...props}/>
             <Icon className={inputCheckboxIconVariants({size})} svg={CheckIcon}/>
         </label>
     )

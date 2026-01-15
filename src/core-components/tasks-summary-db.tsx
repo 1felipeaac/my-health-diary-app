@@ -1,27 +1,39 @@
 import Badge from "../components/badge";
 import Text from "../components/text";
-import taskUseCases from "../useCases/taskUseCases";
 
-export default function TasksSummaryDB(){
-    // const { tasksCounts, concludedTasksCount, isLoadingTasks } = useTasks()
-    const {tasksCounts, concludedTasksCount, isLoadingTasks} = taskUseCases()
+interface TasksSummaryProps {
+    total: number
+    concluded: number
+    loading?: boolean
+    labels?: {
+      total?: string
+      concluded?: string
+    }
+  }
+
+export default function TasksSummaryDB({
+    total,
+    concluded,
+    loading = false,
+    labels,
+  }: TasksSummaryProps){
         
      
     return(
         <>
             <div className="flex items-center gap-2">
-                <Text variant={"body-sm-bold"} className="!text-gray-300"> Tarefas criadas</Text>
+                <Text variant={"body-sm-bold"} className="!text-gray-300"> {labels?.total ?? 'Tarefas criadas'}</Text>
                 <Badge 
                     variant={"secondary"} 
-                    loading={isLoadingTasks}
-                >{tasksCounts}</Badge>
+                    loading={loading}
+                >{total}</Badge>
             </div>
             <div className="flex items-center gap-2">
-                <Text variant={"body-sm-bold"} className="!text-gray-300"> Concluídas</Text>
+                <Text variant={"body-sm-bold"} className="!text-gray-300"> {labels?.concluded ?? 'Concluídas'}</Text>
                 <Badge 
                     variant={"primary"} 
-                    loading={isLoadingTasks}
-                >{concludedTasksCount} de {tasksCounts}</Badge>
+                    loading={loading}
+                >{concluded} de {total}</Badge>
             </div>
         </>
     )

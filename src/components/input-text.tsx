@@ -10,19 +10,20 @@ export const inputTextVariants = cva(`
         size: {
             md: "pb-2 px-2"
         },
-        disabled:{
+        isDisabled:{
             true: "pointer-events-none"
         }
     }, defaultVariants:{
         size: "md",
-        disabled: false
+        isDisabled: false
     }
 })
 
-interface InputTexProps extends VariantProps<typeof inputTextVariants>, Omit<React.ComponentProps<"input">, "size" | "disabled"> {}
+interface InputTexProps extends VariantProps<typeof inputTextVariants>, Omit<React.ComponentProps<"input">, "size"> {}
 
 export default function InputText({
     size,
+    isDisabled,
     disabled,
     className,
     ...props
@@ -30,10 +31,11 @@ export default function InputText({
     return(
         <input
             className={cx(
-                inputTextVariants({size, disabled}), 
+                inputTextVariants({size, isDisabled}), 
                 textVariants(), 
                 className
             )}
+            disabled={disabled}
             {...props}
         />
     )

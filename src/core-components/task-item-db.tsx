@@ -13,24 +13,28 @@ import { cx } from "class-variance-authority";
 import Skeleton from "../components/skeleton";
 import InputRadioButton from "../components/input-radioButton";
 import taskUseCases from "../useCases/taskUseCases";
+import { formatDate } from "../helpers/utils";
 
 interface TaskItemProps {
     task: Task,
     loading?: boolean
+    readyonly?: boolean
 }
 
-export default function TaskItemDB({task, loading}:TaskItemProps){
+export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
+    
+    const isReadonly = !!readyonly
 
     const [isEditing, setIsEditing] = React.useState(
-        task?.state === TaskState.Creating
+        !isReadonly && task?.state === TaskState.Creating
     )
 
     const [taskTitle, setTaskTitle] = React.useState(task.title || "")
 
-    // const {updateTask, updateTaskStatus, updateTaskRating, deleteTask, isUpdatingTask, isDeletingTask} = useTask()
     const {updateTask, updateTaskStatus, updateTaskRating, deleteTask ,isUpdatingTask, isDeletingTask} = taskUseCases()
 
     const ratings = Object.values(TaskRating)
+
 
     function handleEditTask(){
         setIsEditing(true)
@@ -73,14 +77,6 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
         await deleteTask(task.id)
     }
 
-    function formatData(date: Date){
-        return date.toLocaleDateString('pt-BR', {
-            // weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })
-    }
 
     return (
         <Card size="md">
@@ -90,6 +86,7 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
                         checked={!!task?.concluded}
                         onChange={handleChangeTaskStatus}
                         loading={loading}
+                        disabled={isReadonly}
                     />
                     {!loading ? <>
                         <Text 
@@ -101,7 +98,7 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
                         </Text>
                         {task?.concluded === true &&
                             <>
-                                {task.createdAt !== undefined && <div>{formatData(task.createdAt)}</div>}
+                                {task.createdAt !== undefined && <div>{formatDate(task.createdAt.toISOString())}</div>}
                                 <div style={{display: 'flex', gap: '.25rem'}}>
                                 {ratings.map((rating) => (
                                     <InputRadioButton 
@@ -111,7 +108,11 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
                                         status={rating}
                                         value={rating}
                                         checked={task.rating === rating}
-                                        onChange={handleChangeTaskRating}
+                                        onChange={(e) => {
+                                            if (isReadonly) return
+                                            handleChangeTaskRating(e)
+                                          }}
+                                        isDisabled={isReadonly}
                                     />
                                 ))}
                                 </div>
@@ -146,8 +147,9 @@ export default function TaskItemDB({task, loading}:TaskItemProps){
                         onChange={handleChangeTaskTitle}
                         required
                         autoFocus
+                        isDisabled = {isReadonly}
                     />
-                    <div className="flex gap-1">
+                    <div>
                         <ButtonIcon 
                             type="button"
                             icon={XIcon} 

@@ -3,6 +3,7 @@ import PlusIcon from "../assets/icons/Plus-Regular.svg?react"
 import { TaskState, type Task } from "../models/task";
 import taskUseCases from "../useCases/taskUseCases";
 import TaskItemDB from "./task-item-db";
+import { isSameDay, today } from "../helpers/utils";
 
 export default function TasksListDB(){
 
@@ -16,12 +17,14 @@ export default function TasksListDB(){
         (task) => task.state === TaskState.Creating
       )
 
-      const createdTasks = tasks
-        .filter((task) => task.state !== TaskState.Creating)
-        .sort((a, b) => {
-            if (!a.createdAt || !b.createdAt) return 0
-            return a.createdAt.getTime() - b.createdAt.getTime()
-        })
+
+    const tasksCreatedToday = tasks
+    .filter((task) => task.state !== TaskState.Creating)
+    .filter((task) => task.createdAt && isSameDay(task.createdAt, today))
+    .sort((a, b) => {
+        if (!a.createdAt || !b.createdAt) return 0
+        return a.createdAt.getTime() - b.createdAt.getTime()
+    })
 
     return (
     <>
@@ -38,7 +41,7 @@ export default function TasksListDB(){
             {creatingTask && (
                 <TaskItemDB key={creatingTask.id} task={creatingTask} />
             )}
-            {createdTasks.map((task) => (
+            {tasksCreatedToday.map((task) => (
                 <TaskItemDB key={task.id} task={task} />
             ))}
             {isLoadingTasks && <>

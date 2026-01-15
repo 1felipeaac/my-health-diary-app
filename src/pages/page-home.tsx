@@ -5,7 +5,7 @@ import TasksSummary from "../core-components/tasks-summary-db";
 export default function PageHome(){
     return <Container as="article" className="space-y-3">
         <header className="flex items-center justify-between">
-            <TasksSummary/>
+            {/* <TasksSummary/> */}
         </header>
         <TasksList/>
     </Container>

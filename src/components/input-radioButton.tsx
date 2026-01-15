@@ -32,14 +32,14 @@ export const inputRadioButtonVariants = cva(`
         size: {
             md: "w-5 h-5 rounded-sm"
         },
-        disabled:{
+        isDisabled:{
             true: "pointer-events-none"
         }
     },
     defaultVariants:{
         variant: "default",
         size: "md",
-        disabled: false
+        isDisabled: false
     }
 })
 
@@ -58,13 +58,14 @@ export const inputRadioButtonIconVariants = cva(`
 })
 
 interface InputRadioButtonProps extends VariantProps<typeof inputRadioButtonVariants>,
-    Omit<React.ComponentProps<"input">, "size" | "disabled">{
+    Omit<React.ComponentProps<"input">, "size">{
         loading?: boolean
     }
 
 export default function InputRadioButton({
     status,
     size,
+    isDisabled,
     disabled,
     className,
     loading,
@@ -83,7 +84,7 @@ export default function InputRadioButton({
     }
     return (
         <label className={inputRadioButtonWrapperVariants({className})}>
-            <input type="radio" className={inputRadioButtonVariants({size, disabled, status})} {...props}/>
+            <input type="radio" className={inputRadioButtonVariants({size, isDisabled, status})} disabled={disabled} {...props}/>
             <Icon className={inputRadioButtonIconVariants({size})} svg={CheckIcon}/>
         </label>
     )
