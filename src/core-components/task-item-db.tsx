@@ -13,7 +13,6 @@ import { cx } from "class-variance-authority";
 import Skeleton from "../components/skeleton";
 import InputRadioButton from "../components/input-radioButton";
 import taskUseCases from "../useCases/taskUseCases";
-import { formatDate } from "../helpers/utils";
 
 interface TaskItemProps {
     task: Task,
@@ -98,7 +97,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                         </Text>
                         {task?.concluded === true &&
                             <>
-                                {task.createdAt !== undefined && <div>{formatDate(task.createdAt.toISOString())}</div>}
+                                {/* {task.createdAt !== undefined && <div>{formatDate(task.createdAt.toISOString())}</div>} */}
                                 <div style={{display: 'flex', gap: '.25rem'}}>
                                 {ratings.map((rating) => (
                                     <InputRadioButton 

@@ -1,0 +1,45 @@
+<svg
+  width="320"
+  height="64"
+  viewBox="0 0 320 64"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="MeuDiarioFit"
+>
+<!-- Coração (checkbox) -->
+ <path
+    d="M32 52
+       C20 44 12 36 12 26
+       C12 18 18 14 24 14
+       C28 14 31 16 32 18
+       C33 16 36 14 40 14
+       C46 14 52 18 52 26
+       C52 36 44 44 32 52Z"
+    stroke="currentColor"
+    stroke-width="3"
+    fill="none"
+    stroke-linejoin="round"
+  />
+
+  <!-- Check -->
+  <path
+    d="M22 32 L30 40 L42 26"
+    stroke="currentColor"
+    stroke-width="3"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Text -->
+  <text
+    x="64"
+    y="42"
+    font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="28"
+    font-weight="600"
+    fill="currentColor"
+  >
+    MeuDiarioFit
+  </text>
+</svg>

@@ -38,3 +38,11 @@ export function groupTasksByDay(tasks: Task[]) {
       return acc
     }, {})
   }
+
+export function capitalizeWords(value: string): string {
+  return value
+    .toLowerCase()
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}

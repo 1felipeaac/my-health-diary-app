@@ -2,7 +2,25 @@
 import type React from "react"
 import Import from '../assets/icons/Import.svg?react'
 import { cva } from "class-variance-authority"
-import Button from "./button"
+import Icon from "./icon"
+
+
+export const inputFileWrapperVariants = cva(`
+    flex items-center justify-center cursor-pointer
+    transition rounded-lg group gap-2 bg-gray-200 hover:bg-pink-light
+    h-14 py-4 px-5
+`)
+
+export const inputTextVariants = cva("", {
+    variants: {
+        variant: {
+            primary: "text-gray-400"
+        }
+    },
+    defaultVariants:{
+        variant: "primary"
+    }
+})
 
 export const buttonIconVariants = cva("transition", {
     variants: {
@@ -33,21 +51,22 @@ export default function InputFile({
 }:InputFileProps){
     const inputId = id ?? crypto.randomUUID()
     return(
-        <div>
+        <div className={inputFileWrapperVariants()}>
+            <Icon svg={Import} className={buttonIconVariants({variant: "primary", size: "md"})} />
+            <label
+                htmlFor={inputId}
+                style={{cursor: 'pointer'}}
+                className={inputTextVariants()}
+            >
+                {label}
+            </label>
             <input
                 id={inputId}
                 style={{display: 'none'}}
                 {...props}
                 type="file"
             />
-            <label
-                htmlFor={inputId}
-                style={{cursor: 'pointer'}}
-            >
-                <Button icon={Import} >
-                    {label}
-                </Button>
-            </label>
+
         </div>
     )
 }
