@@ -2,9 +2,10 @@ import Container from "../components/container";
 import CalendarHeart from "../assets/icons/Calendar-Heart.svg?react"
 import { capitalizeWords, formatDate, today } from "../helpers/utils";
 import { cva } from "class-variance-authority";
-import Icon from "../components/icon";
 import Text from "../components/text";
-
+import ButtonIcon from "../components/button-icon";
+import { Sidebar } from "../components/side-bar";
+import React from "react";
 export const headerWrapperVariants = cva(`
     flex items-center justify-start py-4 gap-1.5 w-full h-20
 `)
@@ -31,7 +32,7 @@ export const logoIconVariants = cva("transition", {
             primary: "fill-pink-dark"
         },
         size: {
-            md: "w-10 h-10 md:w-12 md:h-12"
+            md: "w-10 h-10 md:w-13 md:h-13"
         },
     },
     defaultVariants: {
@@ -42,10 +43,25 @@ export const logoIconVariants = cva("transition", {
 
 export default function Header(){
     const dateFormatted = formatDate(today.toString())
+
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false)
+
+    function handleOnClick(){
+        setIsSidebarOpen(!isSidebarOpen)
+    }
+
     return(
         <Container as="header">
+            <Sidebar open={isSidebarOpen} title="Menu" onClose={handleOnClick}/>
             <div className={headerWrapperVariants()}>
-                <Icon svg={CalendarHeart} className={logoIconVariants()}/>
+                <ButtonIcon 
+                    icon={CalendarHeart} 
+                    variant={"secondary"} 
+                    size={"md"} 
+                    className={logoIconVariants()} 
+                    style={{height: '30px', width: '30px'}}
+                    onClick={handleOnClick}
+                />
                 <Text as="h1" className={inputTextVariants()}>MeuDiárioFit</Text>
             </div>
              <Text className={inputTextVariants({variant: "secondary"})}>{capitalizeWords(dateFormatted)}</Text>

@@ -16,7 +16,8 @@ export const buttonIconVariants = cva(`
                 tertiary: "bg-transparent hover:bg-gray-200",
             },
             size: {
-                sm: "w-6 h-6 rounded"
+                sm: "w-6 h-6 rounded",
+                md: "w-9 h-9 rounded",
             }, 
             disabled: {
                 true: "opacity-50 pointer-events-none"
@@ -42,7 +43,7 @@ export const buttonIconIconVariants = cva("transition", {
             tertiary: "fill-gray-300 group-hover:fill-gray-400",
         },
         size:{
-            sm:"h-4 w-4"
+            sm:"h-4 w-4",
         }
     },
     defaultVariants: {
@@ -61,6 +62,7 @@ interface ButtonIconProps
 export default function ButtonIcon({
     variant,
     size,
+    style,
     disabled,
     className,
     icon,
@@ -89,8 +91,9 @@ export default function ButtonIcon({
     >
         <Icon 
             svg={handling ? SpinnerIcon: icon} 
-            className={buttonIconIconVariants({size, variant})}
+            className={buttonIconIconVariants({size: "sm", variant})}
             animate={handling}
+            style={style}
         />
     </button>
     )

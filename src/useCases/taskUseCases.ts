@@ -13,7 +13,7 @@ export default function taskUseCases(){
     const [isUpdatingTask, setIsUpdatingTask] = React.useState(false)
     const [isDeletingTask, setIsDeletingTask] = React.useState(false)
     
-    const tasks = useLiveQuery(()=> db.tasks.toArray(), [], [])
+    const tasks = useLiveQuery(()=> db.tasks_v2.toArray(), [], [])
     const isLoadingTasks = !tasks
 
     async function addTask(
@@ -25,21 +25,21 @@ export default function taskUseCases(){
         })
     }
 
-    async function updateTask(id: string, title: Task["title"]) {
+    async function updateTask(id: number, title: Task["title"]) {
         setIsUpdatingTask(true)
         await repository.updateTask(id, title)
         setIsUpdatingTask(false)
     }
 
-    async function updateTaskStatus(id: string, concluded: boolean) {
+    async function updateTaskStatus(id: number, concluded: boolean) {
         await repository.toggleCompleted(id, concluded)
     }
 
-    async function updateTaskRating (id: string, rating: TaskRating){
+    async function updateTaskRating (id: number, rating: TaskRating){
         await repository.toggleRating(id, rating)
     }
 
-    async function deleteTask (id: string) {
+    async function deleteTask (id: number) {
         setIsDeletingTask(true)
         await repository.delete(id)
         setIsDeletingTask(false)
@@ -48,6 +48,14 @@ export default function taskUseCases(){
     async function findAll(){
         return await repository.findAll()
     }
+
+    async function fetchPaginated(page: number, pageSize: number) {
+        return repository.listPaginated(page, pageSize)
+      }
+    
+    async function countTasks(){
+        return repository.countAll()
+      }
 
     const todaysTasksCounts = tasks
         ?.filter(task => task.state === TaskState.Created)
@@ -74,6 +82,8 @@ export default function taskUseCases(){
         updateTaskRating,
         deleteTask,
         findAll,
+        fetchPaginated,
+        countTasks,
         todaysTasksCounts,
         todaysConcludedTasksCount,
         totalTasksCounts,

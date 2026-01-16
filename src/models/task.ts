@@ -12,7 +12,7 @@ export enum TaskRating{
 }
 
 export interface Task {
-    id: string,
+    id?: number,
     title: string,
     concluded?: boolean,
     state?:TaskState,

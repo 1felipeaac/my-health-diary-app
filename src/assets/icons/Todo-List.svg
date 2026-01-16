@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M379.733333 386.133333l-157.866666 155.733334-89.6-87.466667L85.333333 501.333333l136.533334 136.533334 204.8-204.8zM379.733333 108.8l-157.866666 155.733333-89.6-87.466666L85.333333 224l136.533334 136.533333L426.666667 155.733333zM379.733333 663.466667l-157.866666 155.733333-89.6-87.466667L85.333333 778.666667l136.533334 136.533333 204.8-204.8z" fill="#3F51B5" /><path d="M512 469.333333h426.666667v85.333334H512zM512 192h426.666667v85.333333H512zM512 746.666667h426.666667v85.333333H512z" fill="#90CAF9" /></svg>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="15" y1="16" x2="28" y2="16"/>
+<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="5,16 7,18 11,14 "/>
+<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="15" y1="8" x2="28" y2="8"/>
+<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="5,8 7,10 11,6 "/>
+<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="15" y1="24" x2="28" y2="24"/>
+<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="5,24 7,26 11,22 "/>
+</svg>

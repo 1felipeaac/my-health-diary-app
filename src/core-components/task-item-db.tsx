@@ -41,6 +41,8 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     function handleExitEditTask(){
 
+        if (task.id == null) return
+
         if(task.state === TaskState.Creating){
             deleteTask(task.id)
         }
@@ -54,6 +56,9 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     async function handleSaveTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
+
+        if (task.id == null) return
+
         await updateTask(task.id, taskTitle)
         setIsEditing(false)
     }
@@ -61,18 +66,24 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
     function handleChangeTaskStatus(e: React.ChangeEvent<HTMLInputElement>){
         const checked = e.target.checked
 
+        if (task.id == null) return
+
         updateTaskStatus(task.id ,checked)
     }
 
     function handleChangeTaskRating(e: React.ChangeEvent<HTMLInputElement>){
         const rating = e.target.value as Task["rating"] | undefined
 
-        if (rating === undefined) return
-
+        if (task.id == null ||rating === undefined) return
+        
         updateTaskRating(task.id, rating)
+
     }
 
     async function handleDeleteTask(){
+
+        if (task.id == null) return
+
         await deleteTask(task.id)
     }
 

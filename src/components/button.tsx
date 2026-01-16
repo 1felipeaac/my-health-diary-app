@@ -10,7 +10,7 @@ export const buttonVariants = cva(`
 `, {
     variants: {
         variant: {
-            primary: "bg-gray-200 hover:bg-pink-light"
+            primary: "bg-gray-200 hover:bg-pink-light",
         },
         size: {
             md: "h-14 py-4 px-5"
