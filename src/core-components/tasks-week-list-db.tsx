@@ -8,7 +8,7 @@ import Icon from "../components/icon";
 import Text from "../components/text";
 import ArrowLeft from "../assets/icons/Arrow-Left.svg?react"
 import ArrowCircleRight from "../assets/icons/Arrow-Circle-Right.svg?react"
-import ArrowCircleLeft from "../assets/icons/Arrow-Circle-left.svg?react"
+import ArrowCircleLeft from "../assets/icons/Arrow-Circle-Left.svg?react"
 import { buttonIconVariants } from "../components/input-file";
 import ButtonIcon from "../components/button-icon";
 import { cva } from "class-variance-authority";
