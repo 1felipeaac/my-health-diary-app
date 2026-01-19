@@ -95,18 +95,14 @@ export default function TasksWeekList(){
                 onClick={() => setWeekOffset(w => w + 1)}
                 disabled={weekOffset >= minWeekOffset}
                 icon={ArrowCircleLeft}
-                // className={arrowsIconVariants()}
                 variant={"tertiary"}
-                // style={{height: '30px', width: '30px'}}
             />
 
             <ButtonIcon
                 disabled={weekOffset === 0}
                 onClick={() => setWeekOffset(w => w - 1)}
                 icon={ArrowCircleRight}
-                // className={arrowsIconVariants()}
                 variant={"tertiary"}
-                // style={{height: '30px', width: '30px'}}
             />
         </div>
       </section>
