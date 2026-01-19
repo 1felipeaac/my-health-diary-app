@@ -70,3 +70,22 @@ export function getWeekRange(offset = 0) {
 
   return { start, end }
 }
+
+export function getWeekIndexFromDate(date: Date) {
+  const startOfThisWeek = new Date()
+  startOfThisWeek.setHours(0, 0, 0, 0)
+  startOfThisWeek.setDate(
+    startOfThisWeek.getDate() - startOfThisWeek.getDay()
+  )
+
+  const startOfThatWeek = new Date(date)
+  startOfThatWeek.setHours(0, 0, 0, 0)
+  startOfThatWeek.setDate(
+    startOfThatWeek.getDate() - startOfThatWeek.getDay()
+  )
+
+  const diff =
+    startOfThisWeek.getTime() - startOfThatWeek.getTime()
+
+  return Math.round(diff / (7 * 24 * 60 * 60 * 1000))
+}

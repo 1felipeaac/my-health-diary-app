@@ -1,7 +1,7 @@
 import React from "react";
 import { TaskState } from "../models/task";
 import taskUseCases from "../useCases/taskUseCases";
-import { getWeekRange, groupTasksByDay } from "../helpers/utils";
+import { getWeekIndexFromDate, getWeekRange, groupTasksByDay } from "../helpers/utils";
 import { TasksDayCard } from "../components/tasks-day-card";
 import { NavLink } from "react-router";
 import Icon from "../components/icon";
@@ -33,6 +33,7 @@ export default function TasksWeekList(){
     const {tasks} = taskUseCases()
 
     const [weekOffset, setWeekOffset] = React.useState(0)
+      
 
     const minWeekOffset = React.useMemo(() => {
     if (tasks.length === 0) return 0
@@ -43,10 +44,7 @@ export default function TasksWeekList(){
 
     if (!oldestTask?.createdAt) return 0
 
-    const diff =
-        new Date().getTime() - oldestTask.createdAt.getTime()
-
-    return Math.floor(diff / (7 * 24 * 60 * 60 * 1000))
+    return getWeekIndexFromDate(oldestTask.createdAt)
     }, [tasks])
 
     const weeklyTasks = React.useMemo(() => {
@@ -95,14 +93,17 @@ export default function TasksWeekList(){
                 onClick={() => setWeekOffset(w => w + 1)}
                 disabled={weekOffset >= minWeekOffset}
                 icon={ArrowCircleLeft}
-                variant={"tertiary"}
+                variant={"quaternary"}
+                style={{width: '4rem', height: '4rem'}}
             />
+
 
             <ButtonIcon
                 disabled={weekOffset === 0}
                 onClick={() => setWeekOffset(w => w - 1)}
                 icon={ArrowCircleRight}
-                variant={"tertiary"}
+                style={{width: '4rem', height: '4rem'}}
+                variant={"quaternary"}
             />
         </div>
       </section>

@@ -14,6 +14,7 @@ export const buttonIconVariants = cva(`
                 primary: "bg-green-base hover:bg-green-dark",
                 secondary: "bg-gray-200 hover:bg-pink-dark",
                 tertiary: "bg-transparent hover:bg-gray-200",
+                quaternary: "",
             },
             size: {
                 sm: "w-6 h-6 rounded",
@@ -34,16 +35,18 @@ export const buttonIconVariants = cva(`
         }
     })
 
-export const buttonIconIconVariants = cva("transition", {
+export const buttonIconIconVariants = cva("transition stroke-current", {
     variants: {
         variant: {
             none: "",
             primary: "fill-white",
             secondary: "fill-pink-base group-hover:fill-white",
             tertiary: "fill-gray-300 group-hover:fill-gray-400",
+            quaternary: "text-pink-base group-hover:text-pink-base",
         },
         size:{
             sm:"h-4 w-4",
+            md:"h-8 w-8",
         }
     },
     defaultVariants: {

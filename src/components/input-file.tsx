@@ -25,7 +25,7 @@ export const inputTextVariants = cva("", {
 export const buttonIconVariants = cva("transition", {
     variants: {
         variant: {
-            primary: "fill-pink-base"
+            primary: "text-pink-base"
         },
         size: {
             md: "w-5 h-5"
