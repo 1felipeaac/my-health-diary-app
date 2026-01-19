@@ -14,8 +14,19 @@ export function isSameDay(a: Date, b: Date){
 
 export const today = new Date()
 
+export function formatDateFromDate(date: Date) {
+  return date.toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+
 export function formatDate(date: string){
-    return new Date(date).toLocaleDateString('pt-BR', {
+  const [year, month, day] = date.split('-').map(Number)
+    return new Date(year, month - 1, day).toLocaleDateString('pt-BR', {
         weekday: 'long',
         day: 'numeric',
         month: 'long',
@@ -26,7 +37,7 @@ export function formatDate(date: string){
 export function groupTasksByDay(tasks: Task[]) {
     return tasks.reduce<Record<string, Task[]>>((acc, task) => {
       if (!task.createdAt) return acc
-  
+
       const dateKey = task.createdAt.toISOString().split('T')[0] // YYYY-MM-DD
   
       if (!acc[dateKey]) {
@@ -45,4 +56,17 @@ export function capitalizeWords(value: string): string {
     .split(" ")
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ")
+}
+
+export function getWeekRange(offset = 0) {
+  const now = new Date()
+  const start = new Date(now)
+  start.setDate(now.getDate() - now.getDay() - offset * 7)
+  start.setHours(0, 0, 0, 0)
+
+  const end = new Date(start)
+  end.setDate(start.getDate() + 6)
+  end.setHours(23, 59, 59, 999)
+
+  return { start, end }
 }

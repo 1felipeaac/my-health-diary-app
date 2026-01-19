@@ -1,6 +1,7 @@
 import Container from "../components/container";
 import TasksHistoryList from "../core-components/tasks-history-list-db";
 import TasksSummaryDB from "../core-components/tasks-summary-db";
+import TasksWeekList from "../core-components/tasks-week-list-db";
 import taskUseCases from "../useCases/taskUseCases";
 
 
@@ -18,6 +19,6 @@ export default function PageHistory(){
                 }}
             />
         </header>
-        <TasksHistoryList/>
+        <TasksWeekList/>
     </Container>
 }

@@ -1,6 +1,6 @@
 import Container from "../components/container";
 import CalendarHeart from "../assets/icons/Calendar-Heart.svg?react"
-import { capitalizeWords, formatDate, today } from "../helpers/utils";
+import { capitalizeWords, formatDateFromDate, today } from "../helpers/utils";
 import { cva } from "class-variance-authority";
 import Text from "../components/text";
 import ButtonIcon from "../components/button-icon";
@@ -42,7 +42,7 @@ export const logoIconVariants = cva("transition", {
 })
 
 export default function Header(){
-    const dateFormatted = formatDate(today.toString())
+    const dateFormatted = formatDateFromDate(today)
 
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false)
 
