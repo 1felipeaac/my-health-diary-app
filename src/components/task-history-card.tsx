@@ -44,7 +44,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
   
     }
   
-    const variant = isEditing ? "secondary": "tertiary"
+    const variant = isEditing ? "tertiary": "secondary"
   
     return(
       <div className="flex space-x-2 items-center m-0">
