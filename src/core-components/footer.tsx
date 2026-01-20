@@ -5,8 +5,8 @@ import Icon from "../components/icon"
 import GithubIcon from "../assets/icons/Github.svg?react"
 
 export const footerWrapperVariants = cva(`
-    flex items-center justify-center py-4 gap-1.5 
-    mx-auto max-w-[31.5rem] px-2 space-y-3 bg-pink-light rounded-lg mt-8
+    flex items-center justify-center py-2 gap-1.5 
+    mx-auto max-w-[30.5rem] px-2 bg-pink-light rounded-lg mt-8
 `)
 
 export const footerButtonIconVariants = cva("transition", {

@@ -72,21 +72,20 @@ export default function TasksWeekList(){
     return (
         <section className="space-y-4">
         <NavLink to={"/"} className={"flex items-center justify-start gap-1.5"}>
-                <Icon svg={ArrowLeft} className={buttonIconVariants()}/>
-                <Text variant={"body-sm-bold"}>
-                    Tarefas
-                </Text>
-            </NavLink>
-        <div className="flex gap-2">        
-        </div>
+            <Icon svg={ArrowLeft} className={buttonIconVariants()}/>
+            <Text variant={"body-sm-bold"}>
+                Tarefas
+            </Text>
+        </NavLink>
+            
         {Object.entries(groupedTasks).map(([date, tasks]) => (
-          <TasksDayCard
+        <TasksDayCard
             key={date}
             date={date}
             tasks={tasks}
-            readonly
-          />
+        />
         ))}
+
         <div className="flex items-center justify-around">
 
             <ButtonIcon
@@ -97,6 +96,7 @@ export default function TasksWeekList(){
                 style={{width: '4rem', height: '4rem'}}
             />
 
+            {weekOffset}
 
             <ButtonIcon
                 disabled={weekOffset === 0}

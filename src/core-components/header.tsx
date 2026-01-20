@@ -4,7 +4,7 @@ import { capitalizeWords, formatDateFromDate, today } from "../helpers/utils";
 import { cva } from "class-variance-authority";
 import Text from "../components/text";
 import ButtonIcon from "../components/button-icon";
-import { Sidebar } from "../components/side-bar";
+import { Sidebar } from "../components/sidebar";
 import React from "react";
 export const headerWrapperVariants = cva(`
     flex items-center justify-start py-4 gap-1.5 w-full h-20
@@ -13,8 +13,8 @@ export const headerWrapperVariants = cva(`
 export const inputTextVariants = cva("", {
     variants: {
         variant: {
-            primary: `text-pink-dark font-extrabold text-[30px] md:text-3xl`,
-            secondary: `text-pink-dark
+            primary: `fill-pink-dark font-extrabold text-[30px] md:text-3xl`,
+            secondary: `fill-pink-dark
                 font-bold
                 text-2xl
                 leading-none

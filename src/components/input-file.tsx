@@ -6,8 +6,8 @@ import Icon from "./icon"
 
 
 export const inputFileWrapperVariants = cva(`
-    flex items-center justify-center cursor-pointer
-    transition rounded-lg group gap-2 bg-gray-200 hover:bg-pink-light
+    flex items-center justify-start cursor-pointer
+    transition rounded-lg group gap-2 w-full hover:bg-pink-light
     h-14 py-4 px-5
 `)
 

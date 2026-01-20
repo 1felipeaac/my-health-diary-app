@@ -23,6 +23,10 @@ export function formatDateFromDate(date: Date) {
   })
 }
 
+function parseLocalDate(dateString: string) {
+  const [year, month, day] = dateString.split("-").map(Number)
+  return new Date(year, month - 1, day)
+}
 
 export function formatDate(date: string){
   const [year, month, day] = date.split('-').map(Number)
@@ -33,6 +37,29 @@ export function formatDate(date: string){
         year: 'numeric',
       })
 }
+
+export function formatDateShort(dateInput: string | Date) {
+  const date =
+    dateInput instanceof Date
+      ? dateInput
+      : parseLocalDate(dateInput)
+
+  if (isNaN(date.getTime())) return ""
+
+  let weekday = new Intl.DateTimeFormat("pt-BR", {
+    weekday: "long"
+  }).format(date)
+
+  weekday = weekday.replace("-feira", "")
+
+  const day = String(date.getDate()).padStart(2, "0")
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const year = String(date.getFullYear()).slice(-2)
+
+  return `${weekday}, ${day}/${month}/${year}`
+}
+
+
 
 export function groupTasksByDay(tasks: Task[]) {
     return tasks.reduce<Record<string, Task[]>>((acc, task) => {

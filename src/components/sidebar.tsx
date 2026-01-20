@@ -16,12 +16,12 @@ interface SidebarProps {
   }
 
   export const navLinkVariants = cva(`
-    flex items-center justify-center cursor-pointer
-    transition rounded-lg group gap-2 bg-gray-200 hover:bg-pink-light 
-    h-14 py-4 px-5 `)
+    flex items-center justify-start cursor-pointer
+    transition rounded-lg group gap-2 hover:bg-pink-light 
+    h-14 py-4 px-5 w-full`)
 
 export const navLinkTextVariants = cva(`
-    text-[1rem] text-gray-300
+    text-[1rem] text-gray-300 min-w-15
 `)
 
 

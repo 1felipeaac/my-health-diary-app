@@ -39,7 +39,6 @@ export default function TasksHistoryList(){
             key={date}
             date={date}
             tasks={tasks}
-            readonly
           />
         ))}
       </section>

@@ -35,14 +35,14 @@ export const buttonIconVariants = cva(`
         }
     })
 
-export const buttonIconIconVariants = cva("transition stroke-current", {
+export const buttonIconIconVariants = cva("transition", {
     variants: {
         variant: {
             none: "",
             primary: "fill-white",
             secondary: "fill-pink-base group-hover:fill-white",
             tertiary: "fill-gray-300 group-hover:fill-gray-400",
-            quaternary: "text-pink-base group-hover:text-pink-base",
+            quaternary: "fill-pink-base group-hover:fill-pink-base",
         },
         size:{
             sm:"h-4 w-4",

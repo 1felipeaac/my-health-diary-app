@@ -1,28 +1,31 @@
-import TaskCard from "../core-components/task-card"
-import type { Task } from "../models/task"
+import { type Task } from "../models/task"
 import Card from "./card"
 import Text from "./text";
-import { formatDate } from "../helpers/utils";
+import { capitalizeWords, formatDateShort} from "../helpers/utils";
+
+import { TaskHistoryCard } from "./task-history-card";
+
 
 interface TasksDayCardProps {
     date: string
     tasks: Task[]
-    readonly?: boolean
   }
   
-  export function TasksDayCard({ date, tasks, readonly }: TasksDayCardProps) {
+  export function TasksDayCard({ date, tasks}: TasksDayCardProps) {
+
+    const data = formatDateShort(date)
+
     return (
-      <Card size="lg" className="space-y-3">
-        <Text variant="body-sm-bold" className="text-gray-400">
-          {formatDate(date)}
+      <Card size="sm" className="space-y-3">
+        <Text variant="body-sm-bold" className="text-gray-400 flex justify-center border-b-1 border-pink-light">
+          {capitalizeWords(data)}
         </Text>
   
-        <div className="space-y-2">
+        <div className="mt-2 space-x-2 items-center">
           {tasks.map(task => (
-            <TaskCard
+            <TaskHistoryCard
               key={task.id}
               task={task}
-              readonly={readonly}
             />
           ))}
         </div>

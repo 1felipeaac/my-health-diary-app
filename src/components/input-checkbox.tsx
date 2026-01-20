@@ -21,6 +21,7 @@ export const inputCheckboxVariants = cva(`
             border-pink-base hover:border-pink-dark hover:bg-pink-dark/20
             checked:border-pink-base checked:bg-pink-base
             group-hover:checked:border-pink-dark group-hover:checked:bg-pink-dark
+            disabled:bg-gray-300/40
             `
         },
         size: {

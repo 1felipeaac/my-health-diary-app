@@ -108,7 +108,6 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                         </Text>
                         {task?.concluded === true &&
                             <>
-                                {/* {task.createdAt !== undefined && <div>{formatDate(task.createdAt.toISOString())}</div>} */}
                                 <div style={{display: 'flex', gap: '.25rem'}}>
                                 {ratings.map((rating) => (
                                     <InputRadioButton 
@@ -159,7 +158,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                         autoFocus
                         isDisabled = {isReadonly}
                     />
-                    <div>
+                    <div className="flex gap-1">
                         <ButtonIcon 
                             type="button"
                             icon={XIcon} 

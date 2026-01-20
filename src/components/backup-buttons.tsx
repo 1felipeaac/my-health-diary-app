@@ -3,6 +3,11 @@ import {databaseUseCases} from '../useCases/databaseUseCases'
 import Button from './button'
 import InputFile from './input-file'
 import Export from '../assets/icons/Export.svg?react'
+import { cva } from 'class-variance-authority'
+
+const buttonsVariants = cva(`
+hover:bg-pink-light h-14 py-4 px-5 w-full bg-transparent flex items-center justify-start
+`)
 
 export function BackupButtons(){
     async function handleExport(){
@@ -26,8 +31,19 @@ export function BackupButtons(){
 
     return(
         <>
-            <Button onClick={handleExport} icon={Export}>Exportar</Button>
-            <InputFile label="Importar" accept='application/json' onChange={handleImport}/>
+            <Button 
+                className={buttonsVariants()} 
+                onClick={handleExport} 
+                icon={Export}
+            >
+                Exportar
+            </Button>
+            <InputFile
+                className={buttonsVariants()} 
+                label="Importar" 
+                accept='application/json' 
+                onChange={handleImport}
+            />
         </>
     )
 }
