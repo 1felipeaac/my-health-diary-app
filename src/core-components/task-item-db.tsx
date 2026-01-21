@@ -30,7 +30,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     const [taskTitle, setTaskTitle] = React.useState(task.title || "")
 
-    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask ,isUpdatingTask, isDeletingTask} = taskUseCases()
+    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask, isUpdatingTask, isDeletingTask} = taskUseCases()
 
     const ratings = Object.values(TaskRating)
 
@@ -86,7 +86,6 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
         await deleteTask(task.id)
     }
-
 
     return (
         <Card size="md">
