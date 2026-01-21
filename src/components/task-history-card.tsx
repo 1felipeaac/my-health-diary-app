@@ -1,6 +1,5 @@
 import { cx } from "class-variance-authority"
 import React from "react"
-import { isSameDay, today } from "../helpers/utils"
 import { type Task, TaskRating } from "../models/task"
 import taskUseCases from "../useCases/taskUseCases"
 import ButtonIcon from "./button-icon"
@@ -108,9 +107,8 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-        {task?.concluded === false && 
-          task?.createdAt && !checked &&
-          !isSameDay(task?.createdAt, today) && 
+        {task?.concluded === false &&
+         !checked &&
           <ButtonIcon 
               // className="shrink-0 min-w-[36px]"
               icon={PencilIcon} 
