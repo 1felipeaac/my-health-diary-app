@@ -2,28 +2,20 @@ import { cx } from "class-variance-authority"
 import React from "react"
 import { type Task, TaskRating } from "../models/task"
 import taskUseCases from "../useCases/taskUseCases"
-import ButtonIcon from "./button-icon"
 import InputRadioButton from "./input-radioButton"
 import Text from "./text"
-import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
 interface TaskHistoryCardProps {
     task: Task,
     loading?: boolean
   }
   
-export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
+export function TaskHistoryCard({task}:TaskHistoryCardProps){
   
     const ratings = Object.values(TaskRating)
   
     const {updateTaskStatus, updateTaskRating} = taskUseCases()
   
     const [taskTitle] = React.useState(task.title || "")
-  
-    const [isEditing, setIsEditing] = React.useState(false)
-  
-    function handleEditTask(){
-        setIsEditing(prev => !prev)
-    }
   
     function handleChangeTaskRating(e: React.ChangeEvent<HTMLInputElement>){
       const rating = e.target.value as Task["rating"] | undefined
@@ -33,10 +25,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
       updateTaskRating(task.id, rating)
       updateTaskStatus(task.id, true)
 
-      handleEditTask()
-  
     }
-
 
   
     return(
@@ -60,13 +49,21 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
                 />
             ))}
             </div> :
-              <ButtonIcon
-                icon={PencilIcon}
-                variant="tertiary"
-                onClick={handleEditTask}
-                loading={loading}
-                size={"xsm"}
-              />
+              <div className="flex gap-1">
+              {ratings.map((rating) => (
+                  <InputRadioButton 
+                      key={rating+task.id}
+                      id={rating+task.id} 
+                      name={"rating"+task.id} 
+                      status={rating}
+                      value={rating}
+                      checked={task.rating === rating}
+                      onChange={(e) => {
+                          handleChangeTaskRating(e)
+                        }}
+                  />
+              ))}
+              </div>
         }
         <Text 
             className={cx("flex flex-1", 
@@ -75,35 +72,6 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             {taskTitle}
         </Text>
   
-        {task && task.concluded === false && isEditing === true &&
-            <>
-                <div className="flex gap-1">
-                {ratings.map((rating) => (
-                    <InputRadioButton 
-                        key={rating+task.id}
-                        id={rating+task.id} 
-                        name={"rating"+task.id} 
-                        status={rating}
-                        value={rating}
-                        checked={task.rating === rating}
-                        onChange={(e) => {
-                            handleChangeTaskRating(e)
-                          }}
-                        isDisabled={isEditing}
-                    />
-                ))}
-                </div>
-            </>
-        }
-  
-        {/* {task && task.concluded === false &&
-          <ButtonIcon
-              icon={PencilIcon} 
-              variant={variant}
-              onClick={handleEditTask}
-              loading={loading}
-          />
-        } */}
       </div>
     )
   }
