@@ -23,7 +23,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
   
     const [isEditing, setIsEditing] = React.useState(false)
   
-    const [checked, setChecked] = React.useState(false)
+    const [checked, setChecked] = React.useState(!!task.concluded)
   
     function handleEditTask(){
         setIsEditing(prev => !prev)
@@ -44,9 +44,13 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
     }
   
     const variant = isEditing ? "tertiary": "secondary"
+
+    React.useEffect(() => {
+      setChecked(!!task.concluded)
+    }, [task.concluded])
   
     return(
-      <div className="flex gap-2 items-center min-w-0">
+      <div className="flex space-x-2 items-center m-0">
   
         {task?.concluded === true ?
   
@@ -79,24 +83,12 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
               
   
         }
-        <div className="flex gap-1">
-          <Text 
-              className={cx("flex-1 min-w-0 truncate", 
-              )}
-          >
-              {taskTitle}
-          </Text>
-
-          {task?.concluded === false &&
-          !checked &&
-            <ButtonIcon
-                icon={PencilIcon} 
-                variant={variant}
-                onClick={handleEditTask}
-                loading={loading}
-            />
-          }
-        </div>
+        <Text 
+            className={cx("flex-1", 
+            )}
+        >
+            {taskTitle}
+        </Text>
   
         {checked === true && task?.concluded === false &&
             <>
@@ -119,7 +111,15 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-        
+        {task?.concluded === false &&
+         !checked &&
+          <ButtonIcon
+              icon={PencilIcon} 
+              variant={variant}
+              onClick={handleEditTask}
+              loading={loading}
+          />
+        }
       </div>
     )
   }
