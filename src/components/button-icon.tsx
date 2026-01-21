@@ -17,6 +17,7 @@ export const buttonIconVariants = cva(`
                 quaternary: "",
             },
             size: {
+                xsm: "w-5 h-5 rounded",
                 sm: "w-6 h-6 rounded",
                 md: "w-9 h-9 rounded",
             }, 

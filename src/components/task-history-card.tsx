@@ -6,9 +6,6 @@ import ButtonIcon from "./button-icon"
 import InputRadioButton from "./input-radioButton"
 import Text from "./text"
 import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
-import X_Regular from "../assets/icons/X-Regular.svg?react"
-import Icon from "./icon"
-
 interface TaskHistoryCardProps {
     task: Task,
     loading?: boolean
@@ -39,16 +36,15 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
       handleEditTask()
   
     }
-  
-    const variant = isEditing ? "tertiary": "secondary"
+
 
   
     return(
-      <div className="flex space-x-2 items-center m-0">
+      <div className="flex gap-2 items-center">
   
         {task?.concluded === true ?
   
-            <div style={{display: 'flex', gap: '.25rem'}}>
+            <div className="flex gap-2">
             {ratings.filter(
                 (rating)=> task.rating !== undefined && 
                 rating.includes(task.rating)).map((rating) => (
@@ -64,12 +60,16 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
                 />
             ))}
             </div> :
-              <Icon svg={X_Regular} className="h-5 w-5 fill-red-base"/>
-              
-  
+              <ButtonIcon
+                icon={PencilIcon}
+                variant="tertiary"
+                onClick={handleEditTask}
+                loading={loading}
+                size={"xsm"}
+              />
         }
         <Text 
-            className={cx("flex-1", 
+            className={cx("flex flex-1", 
             )}
         >
             {taskTitle}
@@ -96,14 +96,14 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-        {task && task.concluded === false &&
+        {/* {task && task.concluded === false &&
           <ButtonIcon
               icon={PencilIcon} 
               variant={variant}
               onClick={handleEditTask}
               loading={loading}
           />
-        }
+        } */}
       </div>
     )
   }
