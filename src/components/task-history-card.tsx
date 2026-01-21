@@ -46,7 +46,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
     const variant = isEditing ? "tertiary": "secondary"
   
     return(
-      <div className="flex gap-2 items-center m-0">
+      <div className="flex gap-2 items-center min-w-0">
   
         {task?.concluded === true ?
   
@@ -80,11 +80,21 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
   
         }
         <Text 
-            className={cx("flex-1 truncate", 
+            className={cx("flex-1 min-w-0 truncate", 
             )}
         >
             {taskTitle}
         </Text>
+
+        {task?.concluded === false &&
+         !checked &&
+          <ButtonIcon
+              icon={PencilIcon} 
+              variant={variant}
+              onClick={handleEditTask}
+              loading={loading}
+          />
+        }
   
         {checked === true && task?.concluded === false &&
             <>
@@ -107,12 +117,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-          <ButtonIcon
-              icon={PencilIcon} 
-              variant={variant}
-              onClick={handleEditTask}
-              loading={loading}
-          />
+        
       </div>
     )
   }
