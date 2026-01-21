@@ -112,6 +112,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
           task?.createdAt && !checked &&
           !isSameDay(task?.createdAt, today) && 
           <ButtonIcon 
+              // className="shrink-0 min-w-[36px]"
               icon={PencilIcon} 
               variant={variant}
               onClick={handleEditTask}

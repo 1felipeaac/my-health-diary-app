@@ -13,8 +13,8 @@ export default function PageHistory(){
                 concluded={totalConcludedTasksCount}
                 loading={isLoadingTasks}
                 labels={{
-                    total: 'Tarefas Criadas',
-                    concluded: 'Tarefas Concluídas'
+                    total: 'Criadas',
+                    concluded: 'Concluídas'
                 }}
             />
         </header>

@@ -62,19 +62,21 @@ export function formatDateShort(dateInput: string | Date) {
 
 
 export function groupTasksByDay(tasks: Task[]) {
-    return tasks.reduce<Record<string, Task[]>>((acc, task) => {
-      if (!task.createdAt) return acc
+    return tasks.reduce((acc, task) => {
+    if (!task.createdAt) return acc
 
-      const dateKey = task.createdAt.toISOString().split('T')[0] // YYYY-MM-DD
-  
-      if (!acc[dateKey]) {
-        acc[dateKey] = []
-      }
-  
-      acc[dateKey].push(task)
-  
-      return acc
-    }, {})
+    const d = task.createdAt
+    const key = [
+      d.getFullYear(),
+      String(d.getMonth() + 1).padStart(2, "0"),
+      String(d.getDate()).padStart(2, "0"),
+    ].join("-")
+
+    acc[key] = acc[key] ?? []
+    acc[key].push(task)
+
+    return acc
+  }, {} as Record<string, Task[]>)
   }
 
 export function capitalizeWords(value: string): string {
@@ -99,20 +101,28 @@ export function getWeekRange(offset = 0) {
 }
 
 export function getWeekIndexFromDate(date: Date) {
-  const startOfThisWeek = new Date()
-  startOfThisWeek.setHours(0, 0, 0, 0)
-  startOfThisWeek.setDate(
-    startOfThisWeek.getDate() - startOfThisWeek.getDay()
+  const startOfThisWeek = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
   )
 
-  const startOfThatWeek = new Date(date)
-  startOfThatWeek.setHours(0, 0, 0, 0)
-  startOfThatWeek.setDate(
-    startOfThatWeek.getDate() - startOfThatWeek.getDay()
+  const day = startOfThisWeek.getDay()
+  const mondayOffset = day === 0 ? -6 : 1 - day
+  startOfThisWeek.setDate(startOfThisWeek.getDate() + mondayOffset)
+
+  const startOfThatWeek = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
   )
+
+  const thatDay = startOfThatWeek.getDay()
+  const thatMondayOffset = thatDay === 0 ? -6 : 1 - thatDay
+  startOfThatWeek.setDate(startOfThatWeek.getDate() + thatMondayOffset)
 
   const diff =
     startOfThisWeek.getTime() - startOfThatWeek.getTime()
 
-  return Math.round(diff / (7 * 24 * 60 * 60 * 1000))
+  return Math.floor(diff / (7 * 24 * 60 * 60 * 1000))
 }

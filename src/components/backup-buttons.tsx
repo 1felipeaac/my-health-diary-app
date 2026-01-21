@@ -10,6 +10,7 @@ hover:bg-pink-light h-14 py-4 px-5 w-full bg-transparent flex items-center justi
 `)
 
 export function BackupButtons(){
+
     async function handleExport(){
         const blob = await databaseUseCases.exportDatabase()
 
@@ -26,7 +27,7 @@ export function BackupButtons(){
 
         await databaseUseCases.importDatabase(file)
 
-        alert('importado com sucesso!')
+        alert('Importado com sucesso!')
     }
 
     return(

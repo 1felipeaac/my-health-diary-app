@@ -52,7 +52,14 @@ export default function TasksWeekList(){
 
         return tasks.filter(task => {
             if (!task.createdAt) return false
-            return task.createdAt >= start && task.createdAt <= end
+
+            const d = new Date(
+            task.createdAt.getFullYear(),
+            task.createdAt.getMonth(),
+            task.createdAt.getDate()
+            )
+
+            return d >= start && d <= end
         })
     }, [tasks, weekOffset])
 
@@ -77,14 +84,19 @@ export default function TasksWeekList(){
                 Tarefas
             </Text>
         </NavLink>
-            
-        {Object.entries(groupedTasks).map(([date, tasks]) => (
-        <TasksDayCard
-            key={date}
-            date={date}
-            tasks={tasks}
-        />
-        ))}
+
+        {Object.keys(groupedTasks).length === 0 ? 
+            <Text variant="body-sm-bold" className="flex justify-center text-pink-dark bg-gray-200/25">
+                Esta semana não há tarefas criadas.
+            </Text> : 
+            Object.entries(groupedTasks).map(([date, tasks]) => (
+            <TasksDayCard
+                key={date}
+                date={date}
+                tasks={tasks}
+            />
+            )
+        )}
 
         <div className="flex items-center justify-around">
 
@@ -95,8 +107,6 @@ export default function TasksWeekList(){
                 variant={"quaternary"}
                 style={{width: '4rem', height: '4rem'}}
             />
-
-            {weekOffset}
 
             <ButtonIcon
                 disabled={weekOffset === 0}

@@ -22,9 +22,9 @@ export default function TasksSummaryDB({
         
      
     return(
-        <>
+        <div className="flex w-full justify-between">
             <div className="flex items-center gap-2">
-                <Text variant={"body-sm-bold"} className="!text-gray-300"> {labels?.total ?? 'Tarefas criadas'}</Text>
+                <Text variant={"body-sm-bold"} className="!text-gray-300"> {labels?.total ?? 'Criadas'}</Text>
                 <Badge 
                     variant={"secondary"} 
                     loading={loading}
@@ -37,7 +37,7 @@ export default function TasksSummaryDB({
                     loading={loading}
                 >{concluded} de {total}</Badge>
             </div>
-        </>
+        </div>
     )
 
 }
