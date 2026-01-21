@@ -11,8 +11,7 @@ export const inputRadioButtonWrapperVariants = cva(`
 export const inputRadioButtonVariants = cva(`
     appearance-none peer flex items-center justify-center cursor-pointer
     transition-all overflow-hidden outline-none
-    /* Melhoria de foco para acessibilidade */
-    focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400
+    z-10 shrink-0
 `, {
     variants: {
         variant: {
@@ -29,7 +28,7 @@ export const inputRadioButtonVariants = cva(`
             md: "w-5 h-5 rounded-full" 
         },
         isDisabled: {
-            true: "pointer-events-none"
+            true: "opacity-50 pointer-events-none grayscale"
         }
     },
     defaultVariants: {
@@ -69,8 +68,7 @@ export default function InputRadioButton({
     loading,
     ...props
 }: InputRadioButtonProps) {
-    
-    const isActuallyDisabled = isDisabled || disabled
+    const isActuallyDisabled = isDisabled || disabled;
 
     if (loading) {
         return (
@@ -79,7 +77,7 @@ export default function InputRadioButton({
                 "animate-pulse bg-gray-200 border-none",
                 className
             )} />
-        )
+        );
     }
 
     return (
@@ -87,17 +85,45 @@ export default function InputRadioButton({
             <input
                 type="radio"
                 disabled={isActuallyDisabled}
-                className={inputRadioButtonVariants({ 
-                    size, 
-                    isDisabled: isActuallyDisabled, 
-                    status 
-                })}
+                className="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer peer"
                 {...props}
             />
 
-            <div className={inputRadioButtonIconVariants({ size })}>
-                <Icon svg={CheckIcon} className="w-full h-full" />
+            <div className={cx(
+                inputRadioButtonVariants({ 
+                    size, 
+                    isDisabled: isActuallyDisabled, 
+                    status 
+                }),
+                {
+                    "peer-checked:bg-green-base": status === "good",
+                    "peer-checked:bg-yellow-base": status === "average",
+                    "peer-checked:bg-red-base": status === "bad",
+                }
+            )}>
+                <div className={inputRadioButtonIconVariants({ size })}>
+                    <Icon svg={CheckIcon} className="w-full h-full fill-white" />
+                </div>
             </div>
         </label>
-    )
+    );
+}
+
+export function RatingDisplay({ status, size }: { status: any; size: any }) {
+  return (
+    <div className={inputRadioButtonWrapperVariants()}>
+      <div
+        className={cx(
+          inputRadioButtonVariants({ status, size }),
+          {
+            "bg-green-base border-green-base": status === "good",
+            "bg-yellow-base border-yellow-base": status === "average",
+            "bg-red-base border-red-base": status === "bad",
+            "bg-gray-300 border-gray-300": status === "none",
+          }
+        )}
+      >
+      </div>
+    </div>
+  );
 }

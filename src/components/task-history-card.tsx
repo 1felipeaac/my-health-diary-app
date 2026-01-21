@@ -1,9 +1,14 @@
-import { cx } from "class-variance-authority"
 import React from "react"
 import { type Task, TaskRating } from "../models/task"
 import taskUseCases from "../useCases/taskUseCases"
-import InputRadioButton from "./input-radioButton"
+import InputRadioButton, { RatingDisplay } from "./input-radioButton"
 import Text from "./text"
+import ButtonIcon from "./button-icon"
+import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
+import Undo from "../assets/icons/Undo.svg?react"
+
+
+
 interface TaskHistoryCardProps {
     task: Task,
     loading?: boolean
@@ -14,8 +19,8 @@ export function TaskHistoryCard({task}:TaskHistoryCardProps){
     const ratings = Object.values(TaskRating)
   
     const {updateTaskStatus, updateTaskRating} = taskUseCases()
-  
-    const [taskTitle] = React.useState(task.title || "")
+
+    const [showRatingSelector, setShowRatingSelector] = React.useState(false);
   
     function handleChangeTaskRating(e: React.ChangeEvent<HTMLInputElement>){
       const rating = e.target.value as Task["rating"] | undefined
@@ -25,53 +30,57 @@ export function TaskHistoryCard({task}:TaskHistoryCardProps){
       updateTaskRating(task.id, rating)
       updateTaskStatus(task.id, true)
 
+      setShowRatingSelector(false);
+
     }
 
   
-    return(
-      <div className="flex gap-2 items-center">
-  
-        {task?.concluded === true ?
-  
-            <div className="flex gap-2">
-            {ratings.filter(
-                (rating)=> task.rating !== undefined && 
-                rating.includes(task.rating)).map((rating) => (
-                <InputRadioButton 
-                    key={rating+task.id}
-                    id={rating+task.id} 
-                    name={"rating"+task.id} 
-                    status={rating}
-                    value={rating}
-                    checked={task.rating === rating}
-                    onChange={() => {}}
-                    isDisabled={true}
-                />
+    return (
+    <div className="flex gap-2 items-center min-h-[40px]">
+      {task?.concluded === true ? (
+        <div className="flex gap-2 shrink-0">
+          {ratings
+            .filter((rating) => task.rating !== undefined && rating.includes(task.rating))
+            .map((rating) => (
+              <RatingDisplay key={rating + task.id} status={rating} size="md" />
             ))}
-            </div> :
-              <div className="flex gap-1">
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 shrink-0">
+          {!showRatingSelector ? (
+            <ButtonIcon 
+                icon={PencilIcon} 
+                variant="tertiary" 
+                onClick={() => setShowRatingSelector(true)}
+                size="sm"
+            />
+          ) : (
+            <div className="flex gap-1 animate-in fade-in slide-in-from-left-2 duration-200">
               {ratings.map((rating) => (
-                  <InputRadioButton 
-                      key={rating+task.id}
-                      id={rating+task.id} 
-                      name={"rating"+task.id} 
-                      status={rating}
-                      value={rating}
-                      checked={task.rating === rating}
-                      onChange={(e) => {
-                          handleChangeTaskRating(e)
-                        }}
-                  />
+                <InputRadioButton
+                  key={`history-input-${rating}-${task.id}`}
+                  id={`history-input-${rating}-${task.id}`}
+                  name={`history-group-${task.id}`}
+                  status={rating}
+                  value={rating}
+                  checked={task.rating === rating}
+                  onChange={handleChangeTaskRating}
+                />
               ))}
-              </div>
-        }
-        <Text 
-            className={cx("flex flex-1", 
-            )}
-        >
-            {taskTitle}
-        </Text>
-  
-      </div>
-    )
-  }
+              <ButtonIcon 
+                icon={Undo} 
+                variant="tertiary" 
+                onClick={() => setShowRatingSelector(false)}
+                size="sm"
+            />
+            </div>
+          )}
+        </div>
+      )}
+
+      <Text className="flex-1 min-w-0 break-words">
+        {task.title}
+      </Text>
+    </div>
+  );
+}
