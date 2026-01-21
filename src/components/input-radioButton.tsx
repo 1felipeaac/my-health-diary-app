@@ -1,75 +1,64 @@
-import {cva , type VariantProps} from "class-variance-authority"
-import type React from "react"
-import Icon from "./icon"
+import { cx } from "class-variance-authority" 
+import { cva, type VariantProps } from "class-variance-authority"
 import CheckIcon from "../assets/icons/Square-Regular.svg?react"
-import Skeleton from "./skeleton"
+import Icon from "./icon"
+
 export const inputRadioButtonWrapperVariants = cva(`
     inline-flex items-center justify-center relative
-    group
+    group shrink-0 select-none
 `)
 
 export const inputRadioButtonVariants = cva(`
-    relative
-    flex items-center justify-center
-    border-2 border-solid
-    transition
+    appearance-none peer flex items-center justify-center cursor-pointer
+    transition-all overflow-hidden outline-none
+    /* Melhoria de foco para acessibilidade */
+    focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400
 `, {
-    variants:{
+    variants: {
         variant: {
-            none:"",
+            none: "",
             default: `border-2 border-solid`
         },
         status: {
-            good: `
-            border-green-base
-            peer-checked:bg-green-base
-          `,
-          average: `
-            border-yellow-base
-            peer-checked:bg-yellow-base
-          `,
-          bad: `
-            border-red-base
-            peer-checked:bg-red-base
-          `,
-          none: "border-gray-300"
+            good: `border-green-base checked:bg-green-base hover:bg-green-dark/20`,
+            average: `border-yellow-base checked:bg-yellow-base hover:bg-yellow-dark/20`,
+            bad: `border-red-base checked:bg-red-base hover:bg-red-dark/20`,
+            none: "border-gray-300"
         },
         size: {
-          md: "w-5 h-5 rounded-sm"
+            md: "w-5 h-5 rounded-full" 
         },
         isDisabled: {
-          true: "pointer-events-none"
+            true: "pointer-events-none"
         }
     },
-    defaultVariants:{
+    defaultVariants: {
         variant: "default",
+        status: "none",
         size: "md",
         isDisabled: false
     }
 })
 
 export const inputRadioButtonIconVariants = cva(`
-    absolute
-    w-3 h-3
-    fill-white
-    hidden
-    peer-checked:block
-    pointer-events-none
+    absolute pointer-events-none
+    hidden peer-checked:flex items-center justify-center fill-white
 `, {
     variants: {
         size: {
             md: "w-3 h-3"
         },
     },
-    defaultVariants:{
+    defaultVariants: {
         size: "md",
     }
 })
 
-interface InputRadioButtonProps extends VariantProps<typeof inputRadioButtonVariants>,
-    Omit<React.ComponentProps<"input">, "size">{
-        loading?: boolean
-    }
+interface InputRadioButtonProps extends 
+    Omit<React.ComponentProps<"input">, "size">, 
+    VariantProps<typeof inputRadioButtonVariants> {
+    loading?: boolean
+}
 
 export default function InputRadioButton({
     status,
@@ -79,29 +68,35 @@ export default function InputRadioButton({
     className,
     loading,
     ...props
-}:InputRadioButtonProps){
-    if(loading){
-        return <Skeleton
-            rounded={"sm"}
-            className={
-                inputRadioButtonVariants({
-                    size,
-                    status:"none"
-                })
-            }
-        />
+}: InputRadioButtonProps) {
+    
+    const isActuallyDisabled = isDisabled || disabled
+
+    if (loading) {
+        return (
+            <div className={cx(
+                inputRadioButtonVariants({ size, status: "none" }), 
+                "animate-pulse bg-gray-200 border-none",
+                className
+            )} />
+        )
     }
+
     return (
-        <label className={inputRadioButtonWrapperVariants({className})}>
-            <input type="radio" className={"peer absolute opacity-0 w-0 h-0"} disabled={disabled} {...props}/>
-            <div
-                className={inputRadioButtonVariants({
-                size,
-                status,
-                isDisabled
+        <label className={inputRadioButtonWrapperVariants({ className })}>
+            <input
+                type="radio"
+                disabled={isActuallyDisabled}
+                className={inputRadioButtonVariants({ 
+                    size, 
+                    isDisabled: isActuallyDisabled, 
+                    status 
                 })}
-            >
-                <Icon className={inputRadioButtonIconVariants({size})} svg={CheckIcon}/>
+                {...props}
+            />
+
+            <div className={inputRadioButtonIconVariants({ size })}>
+                <Icon svg={CheckIcon} className="w-full h-full" />
             </div>
         </label>
     )
