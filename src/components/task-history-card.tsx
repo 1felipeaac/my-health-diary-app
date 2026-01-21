@@ -107,15 +107,12 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-        {task?.concluded === false &&
-         !checked &&
           <ButtonIcon
               icon={PencilIcon} 
               variant={variant}
               onClick={handleEditTask}
               loading={loading}
           />
-        }
       </div>
     )
   }
