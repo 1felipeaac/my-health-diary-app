@@ -3,10 +3,11 @@ import React from "react"
 import { type Task, TaskRating } from "../models/task"
 import taskUseCases from "../useCases/taskUseCases"
 import ButtonIcon from "./button-icon"
-import InputCheckbox from "./input-checkbox"
 import InputRadioButton from "./input-radioButton"
 import Text from "./text"
 import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
+import X_Regular from "../assets/icons/X-Regular.svg?react"
+import Icon from "./icon"
 
 interface TaskHistoryCardProps {
     task: Task,
@@ -23,31 +24,24 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
   
     const [isEditing, setIsEditing] = React.useState(false)
   
-    const [checked, setChecked] = React.useState(!!task.concluded)
-  
     function handleEditTask(){
         setIsEditing(prev => !prev)
-    }
-  
-    function handleChangeTaskStatus(e: React.ChangeEvent<HTMLInputElement>){
-      setChecked(e.target.checked)
     }
   
     function handleChangeTaskRating(e: React.ChangeEvent<HTMLInputElement>){
       const rating = e.target.value as Task["rating"] | undefined
   
-      if (task.id == null ||rating === undefined) return
+      if (task.id == null ||rating === undefined || task.concluded === undefined) return
       
       updateTaskRating(task.id, rating)
-      updateTaskStatus(task.id, checked)
+      updateTaskStatus(task.id, true)
+
+      handleEditTask()
   
     }
   
     const variant = isEditing ? "tertiary": "secondary"
 
-    React.useEffect(() => {
-      setChecked(!!task.concluded)
-    }, [task.concluded])
   
     return(
       <div className="flex space-x-2 items-center m-0">
@@ -70,16 +64,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
                 />
             ))}
             </div> :
-              <InputCheckbox
-                  checked={checked}
-                  onChange={(e) =>{
-                    if (!isEditing) return
-                    handleChangeTaskStatus(e)
-                  }
-                }
-                  loading={loading}
-                  disabled={!isEditing}
-              />
+              <Icon svg={X_Regular} className="h-5 w-5 fill-red-base"/>
               
   
         }
@@ -90,7 +75,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             {taskTitle}
         </Text>
   
-        {checked === true && task?.concluded === false &&
+        {task && task.concluded === false && isEditing === true &&
             <>
                 <div className="flex gap-1">
                 {ratings.map((rating) => (
@@ -111,8 +96,7 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
             </>
         }
   
-        {task?.concluded === false &&
-         !checked &&
+        {task && task.concluded === false &&
           <ButtonIcon
               icon={PencilIcon} 
               variant={variant}
