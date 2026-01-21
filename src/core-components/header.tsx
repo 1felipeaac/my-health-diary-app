@@ -62,8 +62,7 @@ export default function Header(){
                 />
                 <Text as="h1" className={inputTextVariants()}>MeuDiárioFit</Text>
             </div>
-            <div className="flex items-center justify-between w-full">
-                <span className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full h-10 mb-2">
                     <ButtonIcon 
                         icon={Menu} 
                         variant={"secondary"} 
@@ -73,9 +72,11 @@ export default function Header(){
                         onClick={handleOnClick}
                     />
                     <Text className={inputTextVariants({variant: "secondary"})}>{"Menu"}</Text>
-                </span>
-                <Text className={inputTextVariants({variant: "secondary"})}>{capitalizeWords(dateFormatted)}</Text>
+         
             </div>
+            <Text className={inputTextVariants({variant: "secondary"})}>
+                {capitalizeWords(dateFormatted)}
+            </Text>
         </Container>
     )
 }
