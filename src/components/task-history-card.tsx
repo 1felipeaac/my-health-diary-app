@@ -79,22 +79,24 @@ export function TaskHistoryCard({task, loading}:TaskHistoryCardProps){
               
   
         }
-        <Text 
-            className={cx("flex-1 min-w-0 truncate", 
-            )}
-        >
-            {taskTitle}
-        </Text>
+        <div className="flex gap-1">
+          <Text 
+              className={cx("flex-1 min-w-0 truncate", 
+              )}
+          >
+              {taskTitle}
+          </Text>
 
-        {task?.concluded === false &&
-         !checked &&
-          <ButtonIcon
-              icon={PencilIcon} 
-              variant={variant}
-              onClick={handleEditTask}
-              loading={loading}
-          />
-        }
+          {task?.concluded === false &&
+          !checked &&
+            <ButtonIcon
+                icon={PencilIcon} 
+                variant={variant}
+                onClick={handleEditTask}
+                loading={loading}
+            />
+          }
+        </div>
   
         {checked === true && task?.concluded === false &&
             <>
