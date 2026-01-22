@@ -3,7 +3,6 @@ import Card from "./card"
 import Text from "./text";
 import { capitalizeWords, formatDateShort} from "../helpers/utils";
 
-import { TaskHistoryCard } from "./task-history-card";
 import { TaskHistoryPopUp } from "./task-history-pop-up";
 
 
