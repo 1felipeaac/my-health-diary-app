@@ -30,7 +30,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     const [taskTitle, setTaskTitle] = React.useState(task.title || "")
 
-    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask, isUpdatingTask, isDeletingTask} = taskUseCases()
+    const {updateTask, updateTaskStatus, updateTaskRating, deleteTask ,isUpdatingTask, isDeletingTask} = taskUseCases()
 
     const ratings = Object.values(TaskRating)
 
@@ -87,6 +87,11 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
         await deleteTask(task.id)
     }
 
+    React.useEffect(()=>{
+        
+    },[!task.concluded])
+
+
     return (
         <Card size="md">
             {!isEditing ? (
@@ -107,7 +112,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                         </Text>
                         {task?.concluded === true &&
                             <>
-                                <div style={{display: 'flex', gap: '.25rem'}}>
+                                <div className="flex gap-2.5">
                                 {ratings.map((rating) => (
                                     <InputRadioButton 
                                         key={rating+task.id}
@@ -121,6 +126,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                                             handleChangeTaskRating(e)
                                           }}
                                         isDisabled={isReadonly}
+                                        className="scale-125"
                                     />
                                 ))}
                                 </div>

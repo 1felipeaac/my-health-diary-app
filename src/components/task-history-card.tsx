@@ -1,11 +1,12 @@
 import React from "react"
 import { type Task, TaskRating } from "../models/task"
 import taskUseCases from "../useCases/taskUseCases"
-import InputRadioButton, { RatingDisplay } from "./input-radioButton"
+import InputRadioButton from "./input-radioButton"
 import Text from "./text"
 import ButtonIcon from "./button-icon"
 import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
 import Undo from "../assets/icons/Undo.svg?react"
+import { RatingDisplay } from "./rating-display"
 
 
 
@@ -46,7 +47,7 @@ export function TaskHistoryCard({task}:TaskHistoryCardProps){
             ))}
         </div>
       ) : (
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex gap-2 shrink-0 p-2 -m-2">
           {!showRatingSelector ? (
             <ButtonIcon 
                 icon={PencilIcon} 
@@ -55,7 +56,7 @@ export function TaskHistoryCard({task}:TaskHistoryCardProps){
                 size="sm"
             />
           ) : (
-            <div className="flex gap-1 animate-in fade-in slide-in-from-left-2 duration-200">
+            <>
               {ratings.map((rating) => (
                 <InputRadioButton
                   key={`history-input-${rating}-${task.id}`}
@@ -73,8 +74,9 @@ export function TaskHistoryCard({task}:TaskHistoryCardProps){
                 onClick={() => setShowRatingSelector(false)}
                 size="sm"
             />
-            </div>
-          )}
+            </>
+          ) 
+          }
         </div>
       )}
 
