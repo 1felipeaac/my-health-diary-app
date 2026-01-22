@@ -71,13 +71,7 @@ export default function InputRadioButton({
     const isActuallyDisabled = isDisabled || disabled;
 
     if (loading) {
-        return (
-            <div className={cx(
-                inputRadioButtonVariants({ size, status: "none" }), 
-                "animate-pulse bg-gray-200 border-none",
-                className
-            )} />
-        );
+        return <div className="w-5 h-5 rounded-full animate-pulse bg-gray-200" />;
     }
 
     return (
@@ -88,21 +82,24 @@ export default function InputRadioButton({
                 className="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer peer"
                 {...props}
             />
-
             <div className={cx(
-                inputRadioButtonVariants({ 
-                    size, 
-                    isDisabled: isActuallyDisabled, 
-                    status 
-                }),
+                inputRadioButtonVariants({ size, isDisabled: isActuallyDisabled, status }),
+                "z-10 pointer-events-none", 
                 {
-                    "peer-checked:bg-green-base": status === "good",
-                    "peer-checked:bg-yellow-base": status === "average",
-                    "peer-checked:bg-red-base": status === "bad",
+                    "peer-checked:bg-green-base peer-checked:border-green-base": status === "good",
+                    "peer-checked:bg-yellow-base peer-checked:border-yellow-base": status === "average",
+                    "peer-checked:bg-red-base peer-checked:border-red-base": status === "bad",
                 }
             )}>
-                <div className={inputRadioButtonIconVariants({ size })}>
-                    <Icon svg={CheckIcon} className="w-full h-full fill-white" />
+                <div className={cx(
+                    inputRadioButtonIconVariants({ size }),
+                    "peer-checked:flex hidden items-center justify-center" 
+                )}>
+                    <Icon 
+                        svg={CheckIcon} 
+                        className="w-full h-full fill-white text-white" 
+                        style={{ fill: 'white' }} 
+                    />
                 </div>
             </div>
         </label>
