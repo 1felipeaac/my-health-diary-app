@@ -1,8 +1,4 @@
-import { NavLink } from "react-router"
-import Text from "../components/text"
 import { cva } from "class-variance-authority"
-import Icon from "../components/icon"
-import GithubIcon from "../assets/icons/Github.svg?react"
 
 export const footerWrapperVariants = cva(`
     flex items-center justify-center py-2 gap-1.5 
@@ -27,19 +23,7 @@ export const footerButtonIconVariants = cva("transition", {
 export default function Footer(){
 
     return(
-        <footer className={footerWrapperVariants()}>
-            <NavLink 
-                to={"https://github.com/1felipeaac"} 
-                className={"flex items-center"} 
-                target="_blank" 
-                rel="noopener noreferrer"
-            >
-
-                <Icon svg={GithubIcon} className={footerButtonIconVariants()}/>
-                <Text variant={"body-sm-bold"} className="text-gray-400">
-                    Felipe
-                </Text>
-            </NavLink>
+        <footer>
         </footer>
 
     )

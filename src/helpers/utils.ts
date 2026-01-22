@@ -59,8 +59,6 @@ export function formatDateShort(dateInput: string | Date) {
   return `${weekday}, ${day}/${month}/${year}`
 }
 
-
-
 export function groupTasksByDay(tasks: Task[]) {
     return tasks.reduce((acc, task) => {
     if (!task.createdAt) return acc

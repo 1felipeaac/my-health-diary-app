@@ -24,11 +24,10 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
     updateTaskRating(task.id, rating);
     updateTaskStatus(task.id, true);
     
-    // Feedback visual antes de fechar
     setTimeout(() => setIsEditingRating(false), 300);
   }
 
-  // Mapeamento de cores para o container do Pop-up
+
   const ratingColors: Record<string, string> = {
     good: "border-green-base bg-green-50",
     average: "border-yellow-base bg-yellow-50",
@@ -40,13 +39,11 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
     <div className="relative group w-full">
       {isEditingRating && (
         <>
-          {/* Backdrop de segurança */}
           <div 
             className="fixed inset-0 z-[60] bg-black/10 backdrop-blur-[1px]" 
             onClick={() => setIsEditingRating(false)} 
           />
           
-          {/* Pop-up Estilizado */}
           <div className={cx(
             `absolute left-0 -top-16 z-[70] flex items-center justify-between
              gap-3 p-3 rounded-xl border-2 shadow-2xl transition-all 
@@ -70,9 +67,9 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
                     value={rating}
                     checked={task.rating === rating}
                     onChange={handleChangeTaskRating}
-                    className="scale-125" // Aumenta o tamanho no pop-up para facilitar o toque
+                    className="scale-125" 
                   />
-                  {/* Label visual opcional abaixo do radio */}
+
                   <span className={cx(
                     "text-[8px] font-bold uppercase",
                     rating === 'good' && "text-green-dark",
@@ -90,7 +87,6 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
               <Icon svg={X_Icon} className="w-4 h-4 text-gray-400" />
             </button>
 
-            {/* Triângulo do Pop-up (Dica visual) */}
             <div className={cx(
               "absolute -bottom-2 left-6 w-4 h-4 rotate-45 border-r-2 border-b-2",
               ratingColors[task.rating || "none"]
@@ -99,7 +95,6 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
         </>
       )}
 
-      {/* --- LINHA DO HISTÓRICO --- */}
       <div 
         onClick={() => !task.concluded && setIsEditingRating(true)}
         className={cx(
@@ -108,7 +103,7 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
         )}
       >
         <div className="flex shrink-0">
-            {/* Se já tem rating, mostra a cor correspondente, senão mostra um círculo vazio */}
+        
             <div className={cx(
                 "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors",
                 task.rating ? ratingColors[task.rating].split(' ')[0] : "border-gray-300 border"
@@ -130,11 +125,6 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
           {task.title}
         </Text>
 
-        {/* {!task.concluded && (
-          <div className="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">
-            EDITAR
-          </div>
-        )} */}
       </div>
     </div>
   );
