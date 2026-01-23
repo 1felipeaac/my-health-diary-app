@@ -124,3 +124,14 @@ export function getWeekIndexFromDate(date: Date) {
 
   return Math.floor(diff / (7 * 24 * 60 * 60 * 1000))
 }
+
+export const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+export const defaultTasks = ["Café da Manhã", "Água", "Lanche", "Almoço", "Jantar", "Exercício"]
+
+export const ratingColors: Record<string, string> = {
+  good: "border-green-base bg-green-50",
+  average: "border-yellow-base bg-yellow-50",
+  bad: "border-red-base bg-red-50",
+  none: "border-gray-200 bg-white"
+};

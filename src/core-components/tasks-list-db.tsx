@@ -39,7 +39,9 @@ export default function TasksListDB(){
         </section>
         <section className="space-y-2">
             {creatingTask && (
-                <TaskItemDB key={creatingTask.id} task={creatingTask} />
+                <>
+                    <TaskItemDB key={creatingTask.id} task={creatingTask} />
+                </>
             )}
             {tasksCreatedToday.map((task) => (
                 <TaskItemDB key={task.id} task={task} />

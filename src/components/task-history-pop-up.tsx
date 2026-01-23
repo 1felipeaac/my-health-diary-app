@@ -7,6 +7,8 @@ import Icon from "./icon";
 import Text from "./text";
 import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
 import X_Icon from "../assets/icons/X-Regular.svg?react"
+import { ratingColors } from "../helpers/utils";
+import { PopUp } from "./pop-up";
 
 interface TaskHistoryPopUpProps {
   task: Task,
@@ -27,58 +29,50 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
     setTimeout(() => setIsEditingRating(false), 300);
   }
 
-
-  const ratingColors: Record<string, string> = {
-    good: "border-green-base bg-green-50",
-    average: "border-yellow-base bg-yellow-50",
-    bad: "border-red-base bg-red-50",
-    none: "border-gray-200 bg-white"
-  };
-
   return (
     <div className="relative group w-full">
       {isEditingRating && (
         <>
-          <div 
-            className="fixed inset-0 z-[60] bg-black/10 backdrop-blur-[1px]" 
-            onClick={() => setIsEditingRating(false)} 
-          />
-          
-          <div className={cx(
+          <PopUp 
+            onClick={()=>setIsEditingRating(false)}
+            className={cx(
             `absolute left-0 -top-16 z-[70] flex items-center justify-between
-             gap-3 p-3 rounded-xl border-2 shadow-2xl transition-all 
-             duration-300 animate-in fade-in slide-in-from-bottom-2 w-full
+                gap-3 p-3 rounded-xl border-2 shadow-2xl transition-all 
+                duration-300 animate-in fade-in slide-in-from-bottom-2 w-full
             `,
             ratingColors[task.rating || "none"]
-          )}>
-            <div className="flex flex-col mr-2">
-              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500">
-                Avaliar
-              </span>
-            </div>
+            )}
+          >
 
-            <div className="flex gap-3 items-center bg-white/50 p-2 rounded-lg">
-              {ratings.map((rating) => (
-                <div key={"box-" + rating} className="flex flex-col items-center gap-1">
-                  <InputRadioButton
-                    id={"pop-hist-" + rating + task.id}
-                    name={"pop-rating-hist-" + task.id}
-                    status={rating}
-                    value={rating}
-                    checked={task.rating === rating}
-                    onChange={handleChangeTaskRating}
-                    className="scale-125" 
-                  />
+          <>
+          <div className="flex flex-col mr-2">
+            <span className="text-[10px] font-black uppercase tracking-wider text-gray-500">
+              Avaliar
+            </span>
+          </div>
 
-                  <span className={cx(
-                    "text-[8px] font-bold uppercase",
-                    rating === 'good' && "text-green-dark",
-                    rating === 'average' && "text-yellow-dark",
-                    rating === 'bad' && "text-red-dark",
-                  )}/>
-                </div>
-              ))}
-            </div>
+          <div className="flex gap-3 items-center bg-white/50 p-2 rounded-lg">
+            {ratings.map((rating) => (
+              <div key={"box-" + rating} className="flex flex-col items-center gap-1">
+                <InputRadioButton
+                  id={"pop-hist-" + rating + task.id}
+                  name={"pop-rating-hist-" + task.id}
+                  status={rating}
+                  value={rating}
+                  checked={task.rating === rating}
+                  onChange={handleChangeTaskRating}
+                  className="scale-125" 
+                />
+
+                <span className={cx(
+                  "text-[8px] font-bold uppercase",
+                  rating === 'good' && "text-green-dark",
+                  rating === 'average' && "text-yellow-dark",
+                  rating === 'bad' && "text-red-dark",
+                )}/>
+              </div>
+            ))}
+          </div>
 
             <button 
               onClick={() => setIsEditingRating(false)}
@@ -90,8 +84,9 @@ export function TaskHistoryPopUp({ task }: TaskHistoryPopUpProps) {
             <div className={cx(
               "absolute -bottom-2 left-6 w-4 h-4 rotate-45 border-r-2 border-b-2",
               ratingColors[task.rating || "none"]
-            )} />
-          </div>
+            )}/>
+          </>
+          </PopUp>
         </>
       )}
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "./container";
-import { today } from "../helpers/utils";
+import { daysOfWeek, today } from "../helpers/utils";
 import type { Task } from "../models/task";
 import taskUseCases from "../useCases/taskUseCases";
 import { cva } from "class-variance-authority";
@@ -12,8 +12,6 @@ import Text from "./text";
 import { NavLink } from "react-router";
 import ArrowLeft from "../assets/icons/Arrow-Left.svg?react"
 
-
-const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
 export const buttonDayWrapperVariants = cva(`
   flex items-start gap-1 text-[10px] leading-none

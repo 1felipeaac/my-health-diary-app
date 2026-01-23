@@ -5,6 +5,7 @@ import Text from "../components/text";
 import TrashIcon from "../assets/icons/Trash-Regular.svg?react"
 import PencilIcon from "../assets/icons/PencilSimple-Regular.svg?react"
 import XIcon from "../assets/icons/X-Regular.svg?react"
+import Select from "../assets/icons/Select.svg?react"
 import CheckIcon from "../assets/icons/Check-Regular.svg?react"
 import React from "react";
 import InputText from "../components/input-text";
@@ -13,6 +14,7 @@ import { cx } from "class-variance-authority";
 import Skeleton from "../components/skeleton";
 import InputRadioButton from "../components/input-radioButton";
 import taskUseCases from "../useCases/taskUseCases";
+import SelectDefault from "../components/select-default";
 
 interface TaskItemProps {
     task: Task,
@@ -28,7 +30,9 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
         !isReadonly && task?.state === TaskState.Creating
     )
 
-    const [taskTitle, setTaskTitle] = React.useState(task.title || "")
+    const [open, setOpen] = React.useState(false)
+
+    const [taskTitle, setTaskTitle] = React.useState(task.title ||"")
 
     const {updateTask, updateTaskStatus, updateTaskRating, deleteTask ,isUpdatingTask, isDeletingTask} = taskUseCases()
 
@@ -80,6 +84,11 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     }
 
+    function handleSelectedDefault(e: React.ChangeEvent<HTMLSelectElement>){
+        setTaskTitle(e.target.value)
+        setOpen(!open)
+    }
+
     async function handleDeleteTask(){
 
         if (task.id == null) return
@@ -94,6 +103,10 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
 
     return (
         <Card size="md">
+            
+            {open && <SelectDefault onChange={handleSelectedDefault}>
+                
+                </SelectDefault>}
             {!isEditing ? (
                 <div className="flex items-center gap-4">
                     <InputCheckbox
@@ -155,6 +168,7 @@ export default function TaskItemDB({task, loading, readyonly}:TaskItemProps){
                     onSubmit={handleSaveTask}
                     className="flex items-center gap-4"
                 >
+                    <ButtonIcon variant={"secondary"} icon={Select} onClick={() => setOpen(!open)}/>
                     <InputText 
                         value={taskTitle}
                         className="flex-1" 
