@@ -12,7 +12,7 @@ export function TaskHistoryDetails({ onClose, date }: TaskHistoryDetailsProps) {
 
     const {findByDate} = taskUseCases()
 
-    const tasks = date ? findByDate(date) : [];
+    const tasks = date ? findByDate(date).filter(task => task.rating !== undefined) : [];
 
     return (
         <>
