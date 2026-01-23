@@ -75,6 +75,11 @@ export default function taskUseCases(){
         ?.filter(task => task.concluded)
         .length ?? 0
 
+   function findByDate(date: Date) {
+        return tasks
+        ?.filter(task => task.createdAt && isSameDay(task.createdAt, date)) ?? []
+   }
+
     return {
         addTask,
         updateTask,
@@ -84,6 +89,7 @@ export default function taskUseCases(){
         findAll,
         fetchPaginated,
         countTasks,
+        findByDate,
         todaysTasksCounts,
         todaysConcludedTasksCount,
         totalTasksCounts,

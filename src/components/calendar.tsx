@@ -3,13 +3,35 @@ import Container from "./container";
 import { today } from "../helpers/utils";
 import type { Task } from "../models/task";
 import taskUseCases from "../useCases/taskUseCases";
+import { cva } from "class-variance-authority";
+import Card from "./card";
+import { TaskHistoryDetails } from "../core-components/task-histoty-details";
+import { buttonIconVariants } from "./button-icon";
+import Icon from "./icon";
+import Text from "./text";
+import { NavLink } from "react-router";
+import ArrowLeft from "../assets/icons/Arrow-Left.svg?react"
 
-// definir o elemento do HTML onde o calendário será exibido
+
 const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+export const buttonDayWrapperVariants = cva(`
+  flex items-start gap-1 text-[10px] leading-none
+  `)
 
 export function CalendarTasks(){
     const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
     const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
+    
+    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(undefined);
+
+    function handleCloseDetails(){ 
+      setSelectedDate(undefined)
+    }
+
+    function handleGetDateTask(date: Date){
+      setSelectedDate(date)
+    }
 
     const {tasks}=taskUseCases()
   
@@ -38,22 +60,24 @@ export function CalendarTasks(){
   
 
   function getRatingsForDay(day: number, month: number, year: number, allTasks: Task[]){
-    // Filtra as tarefas que pertencem a este dia específico
+    
     const tasksForDay = allTasks.filter(task => {
       if(!task.createdAt) return
-      const taskDate = new Date(task.createdAt); // Assumindo que sua task tem um campo 'date'
+      const taskDate = new Date(task.createdAt);
       return (
         taskDate.getDate() === day &&
         taskDate.getMonth() === month &&
-        taskDate.getFullYear() === year
+        taskDate.getFullYear() === year &&
+        task.createdAt
       );
     });
   
     // Conta a ocorrência de cada rating
     return {
-      good: tasksForDay.filter(t => t.rating === 'good').length,
-      average: tasksForDay.filter(t => t.rating === 'average').length,
-      bad: tasksForDay.filter(t => t.rating === 'bad').length,
+      good: tasksForDay.filter(t => t.rating === 'good'),
+      average: tasksForDay.filter(t => t.rating === 'average'),
+      bad: tasksForDay.filter(t => t.rating === 'bad'),
+      taskDate: tasksForDay.map(t => t.createdAt)
     };
   };
 
@@ -62,37 +86,51 @@ export function CalendarTasks(){
         let cells = [];
 
         for (let i = 0; i < firstDayOfMonth; i++) {
-            cells.push(<td key={`empty-start-${i}`} className="p-2" />);
+            cells.push(<td key={`empty-start-${i}`} className="p-0.5 md:p-2" />);
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
             const counts = getRatingsForDay(day, currentMonth, currentYear, tasks);
         
             cells.push(
-              <td key={day} className="p-1 border h-15 w-14 vertical-align-top hover:bg-gray-50 transition-colors">
-                <div className="flex flex-col h-full justify-between">
+              <td 
+                key={day} 
+                className="md:p-1 h-15 w-15 vertical-align-top hover:bg-gray-50 transition-colors"
+                
+              >
+                <Card
+                  onClick={()=>handleGetDateTask(counts.taskDate[0]!)}
+                >
                   {/* Número do dia */}
-                  <span className="text-xs font-semibold text-gray-700">{day}</span>
+                  <span className="text-xs font-semibold text-shadow-gray-400 ml-0.5 mt-0.5">{day}</span>
                   
                   {/* Indicadores de Ratings */}
-                  <div className="flex flex-col gap-0.5 mt-1">
-                    {counts.good > 0 && (
-                      <div className="flex items-center gap-1 text-[10px] text-green-700 leading-none">
-                        <span className="w-2 h-2 rounded-full bg-green-base" /> {counts.good}
+                  <div className="flex flex-wrap items-center gap-0.5 w-10 h-10 p-1 overflow-y-auto">
+                    {counts.good.length > 0 && (
+                      <div className={buttonDayWrapperVariants()}>
+                        {counts.good.map((task) => 
+                          <span key={task.id+task.title} className="w-2 h-2 rounded-full bg-green-base" />
+                        )}
+                        
                       </div>
                     )}
-                    {counts.average > 0 && (
-                      <div className="flex items-center gap-1 text-[10px] text-yellow-700 leading-none">
-                        <span className="w-2 h-2 rounded-full bg-yellow-base" /> {counts.average}
+                    {counts.average.length > 0 && (
+                      <div className={buttonDayWrapperVariants()}>
+                        {counts.average.map((task) => 
+                          <span key={task.id+task.title} className="w-2 h-2 rounded-full bg-yellow-base" />
+                        )}
+                        
                       </div>
                     )}
-                    {counts.bad > 0 && (
-                      <div className="flex items-center gap-1 text-[10px] text-red-700 leading-none">
-                        <span className="w-2 h-2 rounded-full bg-red-base" /> {counts.bad}
+                    {counts.bad.length > 0 && (
+                      <div className={buttonDayWrapperVariants()}>
+                        {counts.bad.map((task) => 
+                          <span key={task.id+task.title} className="w-2 h-2 rounded-full bg-red-base" />
+                        )}
                       </div>
                     )}
                   </div>
-                </div>
+                </Card>
               </td>
             );
         
@@ -104,18 +142,26 @@ export function CalendarTasks(){
 
         if (cells.length > 0) {
             while (cells.length < 7) {
-                cells.push(<td key={`empty-end-${cells.length}`} className="p-2 border text-green-dark" />);
+                cells.push(<td key={`empty-end-${cells.length}`}  />);
             }
             rows.push(<tr key="last-row">{cells}</tr>);
         }
 
         return rows;
     };
+
     return(
-        <Container className="p-4">
-            <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-bold capitalize">
+      <>
+        <NavLink to={"/"} className={"flex items-center justify-start ml-2 gap-1.5 mb-2"}>
+            <Icon svg={ArrowLeft} className={buttonIconVariants({variant: "quaternary"})}/>
+            <Text variant={"body-sm-bold"}>
+                Tarefas
+            </Text>
+        </NavLink>
+        <Container>
+            <div className="max-w-md mx-auto bg-gray-200 pb-0.5 shadow-lg rounded-lg overflow-hidden">
+                <div className="flex items-center justify-between mb-4 p-1">
+                    <h2 className="text-lg font-bold capitalize text-gray-400">
                         {new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(new Date(currentYear, currentMonth))}
                     </h2>
                     <div className="flex gap-2">
@@ -140,5 +186,12 @@ export function CalendarTasks(){
                 </table>
             </div>
         </Container>
+        {selectedDate && (
+          <TaskHistoryDetails
+              onClose={handleCloseDetails} 
+              date={selectedDate}
+          />
+      )}
+      </>
     )
 }
