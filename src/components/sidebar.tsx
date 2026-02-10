@@ -17,17 +17,17 @@ interface SidebarProps {
     title?: string
   }
 
-  export const navLinkVariants = cva(`
-    flex items-center justify-start cursor-pointer
-    transition rounded-lg group gap-2 hover:bg-pink-light 
-    h-14 py-4 px-5 w-full`)
+export const navLinkVariants = cva(`
+  flex items-center justify-start cursor-pointer
+  transition rounded-lg group gap-2 hover:bg-pink-light 
+  h-14 py-4 w-full`)
 
 export const navLinkTextVariants = cva(`
     text-[1rem] text-gray-300 min-w-15
 `)
 
 
-  export const sidebarWrapperVariants = cva(`
+export const sidebarWrapperVariants = cva(`
   flex flex-col items-baseline justify-start py-4 px-4 gap-1.5 h-20
 `)
 
@@ -65,7 +65,7 @@ export const footerButtonIconVariants = cva("transition", {
           `}
         >
           <header className="flex items-center justify-between p-4 border-b border-pink-base">
-            <Text variant="body-sm-bold">{title}</Text>
+            <Text variant="body-md-bold">{title}</Text>
             <ButtonIcon
               icon={XIcon}
               variant="tertiary"

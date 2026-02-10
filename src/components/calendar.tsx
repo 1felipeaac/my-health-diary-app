@@ -157,8 +157,8 @@ export function CalendarTasks(){
             </Text>
         </NavLink>
         <Container>
-            <div className="max-w-md mx-auto bg-gray-200 pb-0.5 shadow-lg rounded-lg overflow-hidden">
-                <div className="flex items-center justify-between mb-4 p-1">
+            <div className="max-w-md mx-auto bg-gray-200 p-1.5 shadow-lg rounded-lg overflow-hidden">
+                <div className="flex items-center justify-between p-1">
                     <h2 className="text-lg font-bold capitalize text-gray-400">
                         {new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(new Date(currentYear, currentMonth))}
                     </h2>

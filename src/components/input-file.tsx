@@ -8,7 +8,7 @@ import Icon from "./icon"
 export const inputFileWrapperVariants = cva(`
     flex items-center justify-start cursor-pointer
     transition rounded-lg group gap-2 w-full hover:bg-pink-light
-    h-14 py-4 px-5
+    h-14 py-4
 `)
 
 export const inputTextVariants = cva("", {

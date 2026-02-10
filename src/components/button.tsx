@@ -13,6 +13,7 @@ export const buttonVariants = cva(`
             primary: "bg-gray-200 hover:bg-pink-light",
         },
         size: {
+            sm: "h-14 py-4",
             md: "h-14 py-4 px-5"
         },
         disabled: {
@@ -80,7 +81,7 @@ export default function Button({
         {icon && (
             <Icon
                 svg={handling ? SpinnerIcon : icon}
-                className={buttonIconVariants({variant, size})}
+                className={buttonIconVariants({variant, size : "md"})}
                 animate={handling}
             />
         )}

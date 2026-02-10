@@ -6,7 +6,7 @@ import Export from '../assets/icons/Export.svg?react'
 import { cva } from 'class-variance-authority'
 
 const buttonsVariants = cva(`
-hover:bg-pink-light h-14 py-4 px-5 w-full bg-transparent flex items-center justify-start
+hover:bg-pink-light h-14 py-4 w-full bg-transparent flex items-center justify-start
 `)
 
 export function BackupButtons(){
@@ -36,6 +36,7 @@ export function BackupButtons(){
                 className={buttonsVariants()} 
                 onClick={handleExport} 
                 icon={Export}
+                size={"sm"}
             >
                 Exportar
             </Button>
